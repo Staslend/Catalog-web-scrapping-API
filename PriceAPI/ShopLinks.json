@@ -1,19 +1,18 @@
-{
-  "pages": [
-    {
-      "shop": "ATB",
-      "link": "https://www.atbmarket.com/catalog/287-ovochi-ta-frukti?page=",
-      "pages": 3
-    },
-    {
-      "shop": "ATB",
-      "link": "https://www.atbmarket.com/catalog/322-zamorozheni-produkti?page=",
-      "pages": 4
-    },
-    {
-      "shop": "ATB",
-      "link": "https://www.atbmarket.com/catalog/343-m-yaso-ta-yaytsya?page=",
-      "pages": 2
-    }
-  ]
-}
+[
+  {
+    "shop": "АТБ",
+    "link": "https://www.atbmarket.com/catalog/287-ovochi-ta-frukti?page=",
+    "pages": 3
+  },
+  {
+    "shop": "АТБ",
+    "link": "https://www.atbmarket.com/catalog/322-zamorozheni-produkti?page=",
+    "pages": 4
+  },
+  {
+    "shop": "АТБ",
+    "link": "https://www.atbmarket.com/catalog/343-m-yaso-ta-yaytsya?page=",
+    "pages": 2
+  }
+]
+

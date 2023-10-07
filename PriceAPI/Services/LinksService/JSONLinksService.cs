@@ -13,9 +13,8 @@ namespace PriceAPI.Services.LinksService
 
 
             var jsonfile = File.ReadAllBytes("ShopLinks.json");
-            LinksPack retlp  = JsonSerializer.Deserialize<LinksPack>(jsonfile);
 
-            List<PageModel> list = retlp.pages;
+            List<PageModel> list = JsonSerializer.Deserialize<List<PageModel>>(jsonfile);
             return list;
         }
     }
