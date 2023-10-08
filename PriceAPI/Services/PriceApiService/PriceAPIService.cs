@@ -1,4 +1,5 @@
-﻿using PriceAPI.Models;
+﻿using PriceAPI.Database;
+using PriceAPI.Models;
 using PriceAPI.Services.LinksService;
 using PriceAPI.Services.ProductService;
 using PriceAPI.Services.WebScrappingService;
@@ -17,7 +18,34 @@ namespace PriceAPI.Services.PriceApiService
             _webScrapper = webScrapper;
         }
 
-        public async Task<JsonDocument> GetProducts(string name = " ")
+        public async Task<JsonDocument> GetJSONProductsWebScrapped()
+        {
+            JsonSerializerOptions options = new JsonSerializerOptions
+            {
+                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                WriteIndented = true
+            };
+
+            var jsonString = JsonSerializer.SerializeToDocument(GetProductsWebScrapped(), options);
+
+            return jsonString;
+        }
+
+        public async Task<JsonDocument> GetJSONProductsFromDb()
+        {
+            JsonSerializerOptions options = new JsonSerializerOptions
+            {
+                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                WriteIndented = true
+            };
+
+            var jsonString = JsonSerializer.SerializeToDocument(GetProductsFromDb(), options);
+
+            return jsonString;
+
+        }
+
+        public async Task<List<ProductModel>> GetProductsWebScrapped(string name = " ")
         {
             List<ProductModel> products = new List<ProductModel>();
 
@@ -28,15 +56,27 @@ namespace PriceAPI.Services.PriceApiService
                 products.AddRange((await _webScrapper.GetProducts(pm)));
             }
 
-            JsonSerializerOptions options = new JsonSerializerOptions
+            return products;
+        }
+
+        public async Task<List<ProductModel>> GetProductsFromDb(string name = " ")
+        {
+            List<ProductModel> returnProducts;
+            using (var context = new LinksContext())
             {
-                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-                WriteIndented = true
-            };
+                returnProducts = context.Products.ToList();
+            }
+            return returnProducts;
+        }
 
-            var jsonString = JsonSerializer.SerializeToDocument(products, options);
-
-            return jsonString;
+        public async Task UpdateDatabase()
+        {
+            using (var context = new LinksContext())
+            {
+                context.Products.RemoveRange(context.Products);
+                await context.Products.AddRangeAsync(await GetProductsWebScrapped());
+                await context.SaveChangesAsync();
+            }
         }
     }
 }
