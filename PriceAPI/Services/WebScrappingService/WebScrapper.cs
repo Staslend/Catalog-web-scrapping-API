@@ -21,10 +21,11 @@ namespace PriceAPI.Services.WebScrappingService
 
                 for(int y = 0; y < namenodes.Count; y++)
                 {
-                    returnList.Add(new ProductModel { 
+                    returnList.Add(new ProductModel {
                         Name = namenodes[y].InnerText,
-                        Price = Double.Parse(pricenodes[y].Attributes["value"].Value)
-                    });
+                        Price = Double.Parse(pricenodes[y].Attributes["value"].Value),
+                        Shop = link.shop
+                    }) ;
                 }
                 }
             return returnList;

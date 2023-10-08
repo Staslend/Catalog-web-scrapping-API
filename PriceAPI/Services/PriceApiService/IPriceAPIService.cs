@@ -8,12 +8,12 @@ namespace PriceAPI.Services.ProductService
     {
         //Functions for use in controllers
         public Task UpdateDatabase();
-        public Task<JsonDocument> GetJSONProductsWebScrapped();
-        public Task<JsonDocument> GetJSONProductsFromDb();
+        public Task<JsonDocument> GetJSONProductsWebScrapped(string productName = "", string sorting = "", List<string> shops = null);
+        public Task<JsonDocument> GetJSONProductsFromDb(string productName = "", string sorting = "", List<string> shops = null);
 
         //Functions for internal use
-        public Task<List<ProductModel>> GetProductsWebScrapped(string name = " ");
-        public Task<List<ProductModel>> GetProductsFromDb(string name = " ");
+        public Task<List<ProductModel>> GetProductsWebScrapped(string productName = "", string sorting = "", List<string> shops = null);
+        public Task<List<ProductModel>> GetProductsFromDb(string query);
 
 
 

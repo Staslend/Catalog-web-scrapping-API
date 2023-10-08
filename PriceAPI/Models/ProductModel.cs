@@ -9,5 +9,6 @@ namespace PriceAPI.Models
 
         public string Name { get; set; } = "Def";
         public double Price { get; set; } = 1;
+        public string Shop { get; set; } = "Shop";
     }
 }

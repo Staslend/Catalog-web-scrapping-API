@@ -11,7 +11,7 @@ using PriceAPI.Database;
 namespace PriceAPI.Migrations
 {
     [DbContext(typeof(LinksContext))]
-    [Migration("20231007201034_InitialMigration")]
+    [Migration("20231008131718_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -38,6 +38,10 @@ namespace PriceAPI.Migrations
 
                     b.Property<double>("Price")
                         .HasColumnType("float");
+
+                    b.Property<string>("Shop")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 

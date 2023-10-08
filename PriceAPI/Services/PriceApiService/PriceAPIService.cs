@@ -1,4 +1,5 @@
-﻿using PriceAPI.Database;
+﻿using Microsoft.EntityFrameworkCore;
+using PriceAPI.Database;
 using PriceAPI.Models;
 using PriceAPI.Services.LinksService;
 using PriceAPI.Services.ProductService;
@@ -18,7 +19,7 @@ namespace PriceAPI.Services.PriceApiService
             _webScrapper = webScrapper;
         }
 
-        public async Task<JsonDocument> GetJSONProductsWebScrapped()
+        public async Task<JsonDocument> GetJSONProductsWebScrapped(string productName = "", string sorting = "", List<string> shops = null)
         {
             JsonSerializerOptions options = new JsonSerializerOptions
             {
@@ -31,7 +32,7 @@ namespace PriceAPI.Services.PriceApiService
             return jsonString;
         }
 
-        public async Task<JsonDocument> GetJSONProductsFromDb()
+        public async Task<JsonDocument> GetJSONProductsFromDb(string productName = "", string sorting = "", List<string> shops = null)
         {
             JsonSerializerOptions options = new JsonSerializerOptions
             {
@@ -39,13 +40,30 @@ namespace PriceAPI.Services.PriceApiService
                 WriteIndented = true
             };
 
-            var jsonString = JsonSerializer.SerializeToDocument(GetProductsFromDb(), options);
+            string query = "SELECT * FROM Products ";
+
+            if(productName != "")
+            {
+                query += "WHERE Name LIKE '%" + productName + "%'";
+            }
+
+            if (shops is not null)
+            {
+
+            }
+
+            if(sorting != "")
+            {
+                query += "order by " + sorting;
+            }
+
+            var jsonString = JsonSerializer.SerializeToDocument(GetProductsFromDb(query), options);
 
             return jsonString;
 
         }
 
-        public async Task<List<ProductModel>> GetProductsWebScrapped(string name = " ")
+        public async Task<List<ProductModel>> GetProductsWebScrapped(string productName = "", string sorting = "", List<string> shops = null)
         {
             List<ProductModel> products = new List<ProductModel>();
 
@@ -59,12 +77,12 @@ namespace PriceAPI.Services.PriceApiService
             return products;
         }
 
-        public async Task<List<ProductModel>> GetProductsFromDb(string name = " ")
+        public async Task<List<ProductModel>> GetProductsFromDb(string query)
         {
             List<ProductModel> returnProducts;
             using (var context = new LinksContext())
             {
-                returnProducts = context.Products.ToList();
+                returnProducts = context.Products.FromSqlRaw(query).ToList();
             }
             return returnProducts;
         }

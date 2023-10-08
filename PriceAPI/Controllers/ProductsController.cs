@@ -20,7 +20,7 @@ namespace PriceAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<JsonResult> ProductsWebScrapped(string productName = "")
+        public async Task<JsonResult> ProductsWebScrapped(string productName = "", string sorting = "", List<string> shops = null)
         {
             var res = await _priceApiService.GetProductsWebScrapped();
 
@@ -28,9 +28,9 @@ namespace PriceAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<JsonResult> Products(string productName = "")
+        public async Task<JsonResult> Products(string productName = "", string sorting = "", List<string> shops = null)
         {
-            var res = await _priceApiService.GetProductsFromDb();
+            var res = await _priceApiService.GetJSONProductsFromDb(productName, sorting, shops);
 
             return new JsonResult(res);
         }
@@ -38,7 +38,7 @@ namespace PriceAPI.Controllers
 
         [HttpPut]
         public async Task Update()
-        {
+        {   
             await _priceApiService.UpdateDatabase();
         }
     }
