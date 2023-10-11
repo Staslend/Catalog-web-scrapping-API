@@ -35,11 +35,12 @@ namespace PriceAPI.Controllers
             return new JsonResult(res);
         }
 
-
+        //TODO: Bad responce 
         [HttpPut]
-        public async Task Update()
+        public async Task<IActionResult> Update()
         {   
             await _priceApiService.UpdateDatabase();
+            return Ok("Updade started");
         }
     }
 }

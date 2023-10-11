@@ -67,11 +67,11 @@ namespace PriceAPI.Services.PriceApiService
         {
             List<ProductModel> products = new List<ProductModel>();
 
-            List<PageModel> pml = await _linkService.GetLinks();
+            List<string> links = await _linkService.GetLinks();
 
-            foreach (PageModel pm in pml)
+            foreach (string link in links)
             {
-                products.AddRange((await _webScrapper.GetProducts(pm)));
+                if(link != "") products.AddRange((await _webScrapper.GetProducts(link)));
             }
 
             return products;

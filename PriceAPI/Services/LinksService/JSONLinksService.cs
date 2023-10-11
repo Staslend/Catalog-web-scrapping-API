@@ -5,17 +5,13 @@ namespace PriceAPI.Services.LinksService
 {
     public class JSONLinksService : ILinkService
     {
-        public async Task<List<PageModel>> GetLinks(List<Shop> shops = null)
+        public async Task<List<string>> GetLinks()
         {
-            //FileStream fileStream = new FileStream("ShopLinks.json", FileMode.Open);
-            //var sr = new StreamReader(fileStream);
-            //LinksPack lp = JsonSerializer.Deserialize<LinksPack>(sr.ReadToEnd());
-
-
             var jsonfile = File.ReadAllBytes("ShopLinks.json");
 
             List<PageModel> list = JsonSerializer.Deserialize<List<PageModel>>(jsonfile);
-            return list;
+            
+            return null;
         }
     }
 }

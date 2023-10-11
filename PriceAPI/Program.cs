@@ -2,6 +2,7 @@
 using PriceAPI.Services.LinksService;
 using PriceAPI.Services.PriceApiService;
 using PriceAPI.Services.ProductService;
+using PriceAPI.Services.ShopNameService;
 using PriceAPI.Services.WebScrappingService;
 
 namespace PriceAPI
@@ -18,7 +19,9 @@ namespace PriceAPI
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-            builder.Services.AddScoped<ILinkService, JSONLinksService>();
+            builder.Services.AddScoped<ILinkService, RawLinkService>();
+            builder.Services.AddScoped<IShopNameService, ShopNameService>();
+
             builder.Services.AddScoped<IWebScrapper, WebScrapper>();
 
             builder.Services.AddScoped<IPriceAPIService, PriceAPIService>();
