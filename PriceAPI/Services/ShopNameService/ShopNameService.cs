@@ -14,6 +14,7 @@ namespace PriceAPI.Services.ShopNameService
 
             _shopNames.Add("atbmarket.com", "АТБ");
             _shopNames.Add("eko.zakaz.ua", "ЕКОмаркет");
+            _shopNames.Add("silpo.ua", "Сільпо");
 
         }
 

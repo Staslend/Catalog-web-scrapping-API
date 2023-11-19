@@ -11,6 +11,8 @@ namespace PriceAPI
     {
         public static void Main(string[] args)
         {
+            Environment.SetEnvironmentVariable("PythonDLLPath", "C:\\Users\\Kurimasu Tanaka\\AppData\\Local\\Programs\\Python\\Python311\\python311.dll");
+
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
@@ -19,12 +21,12 @@ namespace PriceAPI
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-            builder.Services.AddScoped<ILinkService, RawLinkService>();
-            builder.Services.AddScoped<IShopNameService, ShopNameService>();
+            builder.Services.AddSingleton<ILinkService, RawLinkService>();
+            builder.Services.AddSingleton<IShopNameService, ShopNameService>();
 
-            builder.Services.AddScoped<IWebScrapper, WebScrapper>();
+            builder.Services.AddSingleton<IWebScrapper, WebScrapper>();
 
-            builder.Services.AddScoped<IPriceAPIService, PriceAPIService>();
+            builder.Services.AddSingleton<IPriceAPIService, PriceAPIService>();
 
             var app = builder.Build();
 

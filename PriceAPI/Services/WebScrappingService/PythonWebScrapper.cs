@@ -7,10 +7,11 @@ using System.Xml.Linq;
 
 namespace PriceAPI.Services.WebScrappingService
 {
-    public class WebScrapper : IWebScrapper
+    public class PythonWebScrapper : IWebScrapper
     {
+        PythonProcessor.PythonProcessor pp = new PythonProcessor.PythonProcessor();
         IShopNameService _shopNameService;
-        public WebScrapper(IShopNameService shopNameService)
+        public PythonWebScrapper(IShopNameService shopNameService)
         {
             _shopNameService = shopNameService;
         }
@@ -21,6 +22,8 @@ namespace PriceAPI.Services.WebScrappingService
             List<ProductModel> returnList = new List<ProductModel>();
 
             HtmlNode prevFirstNode = null;
+
+
             string shopName = _shopNameService.GetShopName(link);
 
             bool pagesNotEnded = true;
