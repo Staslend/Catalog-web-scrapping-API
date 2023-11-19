@@ -1,5 +1,4 @@
-﻿using PriceAPI.Models;
-
+﻿
 namespace PriceAPI.Services.LinksService
 {
     public interface ILinkService

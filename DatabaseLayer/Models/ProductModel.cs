@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace PriceAPI.Models
+namespace DatabaseLayer.Models
 {
     public class ProductModel
     {

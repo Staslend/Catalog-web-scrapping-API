@@ -1,6 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PriceAPI.Database;
-using PriceAPI.Models;
 using PriceAPI.Services.LinksService;
 using PriceAPI.Services.ProductService;
 using PriceAPI.Services.WebScrappingService;

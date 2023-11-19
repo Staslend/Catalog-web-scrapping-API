@@ -1,5 +1,4 @@
-﻿using PriceAPI.Models;
-using System.Text.Json;
+﻿using System.Text.Json;
 
 namespace PriceAPI.Services.LinksService
 {

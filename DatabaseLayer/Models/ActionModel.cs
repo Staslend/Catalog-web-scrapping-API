@@ -1,4 +1,4 @@
-﻿namespace PriceAPI.Models
+﻿namespace DatabaseLayer.Models
 {
     public class ActionModel
     {
