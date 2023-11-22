@@ -4,17 +4,11 @@ namespace DatabaseLayer.Models
 {
     public class XPathModel
     {
-        [Required]
-        public string shopId { get; set; } = String.Empty;
-        [Required]
-        public ShopModel shop { get; set; } = null!;
 
         [Key]  
         public string xPath { get; set; } = String.Empty;
         [Required]
-        public string dataType { get; set; } = String.Empty;
-
-        public int actionId { get; set; }
-        public ActionModel? action { get; set; }
+        public string propertyName { get; set; } = String.Empty;
+        public string atribute { get; set; } = String.Empty;
     }
 }

@@ -6,13 +6,10 @@ namespace DatabaseLayer.Models
     {
         [Key]
         public int id { get; set; }
-        [Required]
-        public string productName { get; set; } = "Def";
 
-
-        [Required]
-        public double productPrice { get; set; } = 1.0;
-        public double newProductPrice { get; set; }
+        //Reference to data relations
+        public List<ProductNumericDataModel>? productNumericData;
+        public List<ProductTextDataModel>? productTextData;
 
         //Shop reference
         public string? shopId { get; set; }

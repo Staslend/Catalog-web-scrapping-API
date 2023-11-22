@@ -5,9 +5,13 @@ VisualStudioVersion = 17.7.34018.315
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PriceAPI", "PriceAPI\PriceAPI.csproj", "{E868A103-61F0-40BA-860D-CDF77663BAE8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccessLayer", "DataAccessLayer\DataAccessLayer.csproj", "{B14BB837-653C-44DD-9585-24FB5C8E54DD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccessLayer", "DataAccessLayer\DataAccessLayer.csproj", "{B14BB837-653C-44DD-9585-24FB5C8E54DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseLayer", "DatabaseLayer\DatabaseLayer.csproj", "{F10A1B24-AE17-42EE-A09F-DAAEE15DA57B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DatabaseLayer", "DatabaseLayer\DatabaseLayer.csproj", "{F10A1B24-AE17-42EE-A09F-DAAEE15DA57B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceLayer", "ServiceLayer\ServiceLayer.csproj", "{A18230D7-2A3D-455C-BCE4-9058F911B80C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebScrapperLayer", "WebScrapperLayer\WebScrapperLayer.csproj", "{0F67D0FA-E277-4909-A073-15384F68B800}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +31,14 @@ Global
 		{F10A1B24-AE17-42EE-A09F-DAAEE15DA57B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F10A1B24-AE17-42EE-A09F-DAAEE15DA57B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F10A1B24-AE17-42EE-A09F-DAAEE15DA57B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A18230D7-2A3D-455C-BCE4-9058F911B80C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A18230D7-2A3D-455C-BCE4-9058F911B80C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A18230D7-2A3D-455C-BCE4-9058F911B80C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A18230D7-2A3D-455C-BCE4-9058F911B80C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F67D0FA-E277-4909-A073-15384F68B800}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F67D0FA-E277-4909-A073-15384F68B800}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F67D0FA-E277-4909-A073-15384F68B800}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F67D0FA-E277-4909-A073-15384F68B800}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
