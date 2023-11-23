@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DatabaseLayer.Models;
+using Microsoft.EntityFrameworkCore;
 using PriceAPI.Services.LinksService;
 using PriceAPI.Services.ProductService;
 using PriceAPI.Services.WebScrappingService;
@@ -78,21 +79,36 @@ namespace PriceAPI.Services.PriceApiService
         public async Task<List<ProductModel>> GetProductsFromDb(string query)
         {
             List<ProductModel> returnProducts;
+            /*
             using (var context = new LinksContext())
             {
                 returnProducts = context.Products.FromSqlRaw(query).ToList();
             }
-            return returnProducts;
+            */
+            //Fixed to make it compile
+            return null;
         }
 
         public async Task UpdateDatabase()
         {
+            /*
             using (var context = new LinksContext())
             {
                 context.Products.RemoveRange(context.Products);
                 await context.Products.AddRangeAsync(await GetProductsWebScrapped());
                 await context.SaveChangesAsync();
             }
+            */
+        }
+
+        Task<List<ProductModel>> IPriceAPIService.GetProductsWebScrapped(string productName, string sorting, List<string> shops)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<List<ProductModel>> IPriceAPIService.GetProductsFromDb(string query)
+        {
+            throw new NotImplementedException();
         }
     }
 }

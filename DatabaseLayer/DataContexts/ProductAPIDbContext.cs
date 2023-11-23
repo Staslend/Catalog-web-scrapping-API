@@ -1,6 +1,5 @@
 ﻿using DatabaseLayer.Models;
 using Microsoft.EntityFrameworkCore;
-using PriceAPI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,9 +1,9 @@
 ﻿using HtmlAgilityPack;
-using PriceAPI.Models;
 using PriceAPI.Services.ShopNameService;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Xml.Linq;
+using DatabaseLayer.Models;
 
 namespace PriceAPI.Services.WebScrappingService
 {
@@ -51,9 +51,9 @@ namespace PriceAPI.Services.WebScrappingService
                             {
                                 returnList.Add(new ProductModel
                                 {
-                                    Name = namenodes[y].InnerText,
-                                    Price = Double.Parse(pricenodes[y].Attributes["value"].Value),
-                                    Shop = shopName
+                                    //Name = namenodes[y].InnerText,
+                                    //Price = Double.Parse(pricenodes[y].Attributes["value"].Value),
+                                    //Shop = shopName
                                 });
                             }
                             prevFirstNode = namenodes[0];
@@ -76,9 +76,9 @@ namespace PriceAPI.Services.WebScrappingService
                             {
                                 returnList.Add(new ProductModel
                                 {
-                                    Name = namenodes[y].InnerText,
-                                    Price = Double.Parse(pricenodes[y].InnerText),
-                                    Shop = shopName
+                                    //Name = namenodes[y].InnerText,
+                                    //Price = Double.Parse(pricenodes[y].InnerText),
+                                    //Shop = shopName
                                 });
                             }
                             prevFirstNode = namenodes[0];
@@ -101,9 +101,9 @@ namespace PriceAPI.Services.WebScrappingService
                             {
                                 returnList.Add(new ProductModel
                                 {
-                                    Name = namenodes[y].InnerText,
-                                    Price = Double.Parse(pricenodes[y].InnerText.Substring(0, pricenodes[y].InnerText.Length-3)),
-                                    Shop = shopName
+                                    //Name = namenodes[y].InnerText,
+                                    //Price = Double.Parse(pricenodes[y].InnerText.Substring(0, pricenodes[y].InnerText.Length-3)),
+                                    //Shop = shopName
                                 });
                             }
                             prevFirstNode = namenodes[0];

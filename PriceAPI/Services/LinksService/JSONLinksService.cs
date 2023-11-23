@@ -8,7 +8,7 @@ namespace PriceAPI.Services.LinksService
         {
             var jsonfile = File.ReadAllBytes("ShopLinks.json");
 
-            List<PageModel> list = JsonSerializer.Deserialize<List<PageModel>>(jsonfile);
+            //List<PageModel> list = JsonSerializer.Deserialize<List<PageModel>>(jsonfile);
             
             return null;
         }

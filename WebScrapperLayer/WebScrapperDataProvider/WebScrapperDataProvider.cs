@@ -8,7 +8,7 @@ using System.Xml.Linq;
 
 namespace WebScrapperLayer.WebScrapperDataProvider
 {
-    internal class WebScrapperDataProvider : IWebScrapperDataProvider
+    public class WebScrapperDataProvider : IWebScrapperDataProvider
     {
         WebScrapper.WebScrapper _webScrapper;
         WebScrapperActions.WebScrapperActions _webScrapperActions;

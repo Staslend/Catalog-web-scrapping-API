@@ -1,4 +1,5 @@
-﻿
+﻿using DatabaseLayer.Models;
+
 namespace PriceAPI.Services.WebScrappingService
 {
     public interface IWebScrapper

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Text.Json;
+using DatabaseLayer.Models;
 
 namespace PriceAPI.Services.ProductService
 {

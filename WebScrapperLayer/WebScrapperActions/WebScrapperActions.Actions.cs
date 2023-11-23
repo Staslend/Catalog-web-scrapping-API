@@ -9,17 +9,26 @@ namespace WebScrapperLayer.WebScrapperActions
 {
     public partial class WebScrapperActions
     {
-        private void CutAction(ref List<ProductTextDataModel> productData, ActionModel action)
+        protected void CutAction(ref List<ProductTextDataModel> productData, ActionModel action)
         {
-            int param1 = int.Parse(action.actionData1);
-            int param2 = int.Parse(action.actionData2);
+            int param1, param2;
+            if (!int.TryParse(action.actionData1, out param1)) param1 = 0;
+            if (!int.TryParse(action.actionData2, out param2)) param2 = 0;
 
-            string productPropertyData =  productData.Find(x => x.productPropertyName == action.productPropertyName).propertyValue;
+            try
+            {
+                ProductTextDataModel textData = productData.Single(x => x.productPropertyName == action.productPropertyName);
 
-            productPropertyData = productPropertyData.Substring(param1, param2 - param1);
+                string productPropertyData = textData.propertyValue;
+                productPropertyData = productPropertyData.Substring(param1, textData.propertyValue.Length - (param2 - param1));
+                textData.propertyValue = productPropertyData;
+            }
+            catch (NullReferenceException  ex)
+            {
+            }
         }
 
-        private void MergeAction(ref List<ProductTextDataModel> productData, ActionModel action)
+        protected void MergeAction(ref List<ProductTextDataModel> productData, ActionModel action)
         {
             productData.Add(new ProductTextDataModel
             {
@@ -32,12 +41,12 @@ namespace WebScrapperLayer.WebScrapperActions
 
         }
 
-        private void ConvertAction(ref List<ProductTextDataModel> productTextData, ref List<ProductNumericDataModel> productNumericData, ActionModel action)
+        protected void ConvertAction(ref List<ProductTextDataModel> productTextData, ref List<ProductNumericDataModel> productNumericData, ActionModel action)
         {
             productNumericData.Add(new ProductNumericDataModel
             {
                 productPropertyName = action.productPropertyName,
-                propertyValue = double.Parse(productTextData.Find(x => x.productPropertyName == action.actionData1).propertyValue)
+                propertyValue = double.Parse(productTextData.Single(x => x.productPropertyName == action.productPropertyName).propertyValue)
             }) ;
         }
     }

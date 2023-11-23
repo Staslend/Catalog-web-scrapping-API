@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace WebScrapperLayer.WebScrapperActions
 {
-    internal interface IWebScrapperActions
+    public interface IWebScrapperActions
     {
         public List<ProductModel> ProcessProductData(List<ProductModel> rawProducts, List<ActionModel> actions);
     }

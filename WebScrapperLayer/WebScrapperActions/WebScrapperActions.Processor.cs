@@ -12,7 +12,7 @@ namespace WebScrapperLayer.WebScrapperActions
     {
 
 
-        private ActionType GetActionType(ActionName actionName)
+        protected ActionType GetActionType(ActionName actionName)
         {
             switch (actionName)
             {
@@ -28,7 +28,7 @@ namespace WebScrapperLayer.WebScrapperActions
             return ActionType.Converting;
         }
 
-        private void ActionRunnder(ref List<ProductTextDataModel> productTextData, ref List<ProductNumericDataModel> productNumericData, ActionModel action)
+        protected void ActionRunnder(ref List<ProductTextDataModel> productTextData, ref List<ProductNumericDataModel> productNumericData, ActionModel action)
         {
             switch (action.actionName)
             {
@@ -50,7 +50,7 @@ namespace WebScrapperLayer.WebScrapperActions
             }           
         }
 
-        List<ProductNumericDataModel> ProcessActions(ref List<ProductTextDataModel> productRawData, List<ActionModel> actions)
+        protected List<ProductNumericDataModel> ProcessActions(ref List<ProductTextDataModel> productRawData, List<ActionModel> actions)
         {
             List<ProductNumericDataModel> numericProductData = new List<ProductNumericDataModel>();
 
