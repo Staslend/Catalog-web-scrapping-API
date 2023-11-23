@@ -20,7 +20,7 @@ namespace WebScrapperLayer.WebScrapperActions
                 ProductTextDataModel textData = productData.Single(x => x.productPropertyName == action.actionData.ElementAt(0).actionData);
 
                 string productPropertyData = textData.propertyValue;
-                productPropertyData = productPropertyData.Substring(param1, textData.propertyValue.Length - (param2 - param1));
+                productPropertyData = productPropertyData.Substring(param1, textData.propertyValue.Length - (param2 + param1));
                 textData.propertyValue = productPropertyData;
             }
             catch (NullReferenceException  ex)

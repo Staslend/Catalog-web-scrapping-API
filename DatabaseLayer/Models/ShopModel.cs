@@ -10,10 +10,10 @@ namespace DatabaseLayer.Models
             
         //Shop data
         [Required]
-        public string shopName { get; set; } = "Default shop";
+        public string shopName { get; set; } = string.Empty;
 
         [Required]
-        public string shopDomainName { get; set; } = "google.com";
+        public string shopDomainName { get; set; } = string.Empty;
 
 
         //Reference to general actions and xPaths

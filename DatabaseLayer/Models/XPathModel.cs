@@ -5,7 +5,8 @@ namespace DatabaseLayer.Models
     public class XPathModel
     {
 
-        [Key]  
+        [Key]
+        public int xPathId { get; set; }
         public string xPath { get; set; } = String.Empty;
         [Required]
         public string propertyName { get; set; } = String.Empty;

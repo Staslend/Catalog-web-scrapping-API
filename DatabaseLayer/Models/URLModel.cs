@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,6 +9,7 @@ namespace DatabaseLayer.Models
 {
     internal class URLModel
     {
+        [Key]
         public int urlId { get; set; }
         public string url { get; set; }
 

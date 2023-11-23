@@ -5,7 +5,7 @@ namespace DatabaseLayer.Models
     public class ProductModel
     {
         [Key]
-        public int id { get; set; }
+        public int productId { get; set; }
 
         //Reference to data relations
         public List<ProductNumericDataModel>? productNumericData;

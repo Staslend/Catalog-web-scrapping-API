@@ -2,6 +2,7 @@
 
 namespace DatabaseLayer.Models
 {
+    //Name of action that represent requested task
     public enum ActionName
     {
         Cut, 
@@ -9,6 +10,8 @@ namespace DatabaseLayer.Models
         ConvertToNumeric
     }
 
+    //Types of action that folow each other in the order 
+    //TODO: Replace this system with customisable priorities
     public enum ActionType
     {
         Editing,
@@ -23,7 +26,6 @@ namespace DatabaseLayer.Models
         [Required]
         public ActionName actionName { get; set; }
 
-        //TODO: Shoul it be nullable?
         public List<ActionDataModel>? actionData { get; set; }
     }
 }

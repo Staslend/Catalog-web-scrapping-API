@@ -10,13 +10,13 @@ namespace WebScrapperLayer.WebScrapperActions
 
     public partial class WebScrapperActions : IWebScrapperActions
     {
-
+        bool errorOccured = false;
 
         protected ActionType GetActionType(ActionName actionName)
         {
             switch (actionName)
             {
-                case ActionName.Cut: case ActionName.CutLeft: case ActionName.CutRight:
+                case ActionName.Cut:
                     return ActionType.Editing;
                 case ActionName.Merge:
                     return ActionType.Merging;
@@ -28,26 +28,37 @@ namespace WebScrapperLayer.WebScrapperActions
             return ActionType.Converting;
         }
 
+        //Мне это кажется слишком упоротым, но ничего лучше я найти не могу. 
+        //Все решения которые появлялись в голове либо не полные, либо ещё более топорные
         protected void ActionRunnder(ref List<ProductTextDataModel> productTextData, ref List<ProductNumericDataModel> productNumericData, ActionModel action)
         {
-            switch (action.actionName)
+            try
             {
-                case ActionName.Cut:
-                    {
-                        CutAction(ref productTextData, action);
-                        break;
-                    }
-                case ActionName.Merge:
-                    {
-                        MergeAction(ref productTextData, action);
-                        break;
-                    }
-                case ActionName.ConvertToNumeric:
-                    {
-                        ConvertAction(ref productTextData, ref productNumericData, action);
-                        break;
-                    }
-            }           
+                switch (action.actionName)
+                {
+                    case ActionName.Cut:
+                        {
+                            CutAction(ref productTextData, action);
+                            break;
+                        }
+                    case ActionName.Merge:
+                        {
+                            MergeAction(ref productTextData, action);
+                            break;
+                        }
+                    case ActionName.ConvertToNumeric:
+                        {
+                            ConvertToNumericAction(ref productTextData, ref productNumericData, action);
+                            break;
+                        }
+                }
+
+            }
+            catch
+            {
+                errorOccured = true;
+                return;
+            }
         }
 
         protected List<ProductNumericDataModel> ProcessActions(ref List<ProductTextDataModel> productRawData, List<ActionModel> actions)
@@ -76,6 +87,8 @@ namespace WebScrapperLayer.WebScrapperActions
             foreach (var rawProduct in rawProducts)
             {
                 rawProduct.productNumericData = ProcessActions(ref rawProduct.productTextData, actions);
+
+                if(errorOccured) return new List<ProductModel>();
             }
             return rawProducts;
         }

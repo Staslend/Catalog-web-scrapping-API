@@ -84,7 +84,7 @@ namespace WebScrapperTesting.Tests
                 [new ActionDataModel { actionData = "price"}]).Build();
 
             //Act
-            ConvertAction(ref model.productTextData, ref model.productNumericData, action);
+            ConvertToNumericAction(ref model.productTextData, ref model.productNumericData, action);
 
             //Assert
             Assert.Equal(192.23, model.productNumericData[0].propertyValue);

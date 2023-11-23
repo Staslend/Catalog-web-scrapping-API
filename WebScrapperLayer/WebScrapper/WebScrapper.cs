@@ -7,7 +7,7 @@ using HtmlAgilityPack;
 
 namespace WebScrapperLayer.WebScrapper
 {
-    internal class WebScrapper : IWebScrapper
+    public class WebScrapper : IWebScrapper
     {
         HtmlWeb _htmlWeb;
         HtmlDocument _htmlDocument;
