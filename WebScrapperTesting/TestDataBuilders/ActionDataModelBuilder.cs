@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DatabaseLayer.Models
+namespace WebScrapperTesting.TestDataBuilders
 {
-    internal class ActionData
+    internal class ActionDataModelBuilder
     {
+
     }
 }

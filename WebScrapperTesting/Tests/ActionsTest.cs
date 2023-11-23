@@ -6,7 +6,7 @@ using WebScrapperTesting.WebScrapperDataFactory;
 
 namespace WebScrapperTesting.Tests
 {
-    public class ActionTest : WebScrapperActions
+    public class ActionsTest : WebScrapperActions
     {
 
         [Theory]
@@ -33,14 +33,18 @@ namespace WebScrapperTesting.Tests
                 new ProductTextDataBuilder().WithTextData("price","192.23grn").Build()
                 ).Build();
 
-            ActionModel action = new ActionModelBuilder().WithAction(ActionName.Cut, "price", "0", "3").Build();
+            ActionModel action = new ActionModelBuilder().WithAction(ActionName.Cut, [
+                new ActionDataModel { actionData = "price" },
+                new ActionDataModel { actionData ="0"},
+                new ActionDataModel { actionData = "3"},
+            ]).Build();
 
             //Act
 
             CutAction(ref model.productTextData, action);
             //Assert
             Assert.Equal("192.23", model.productTextData[0].propertyValue);
-            Assert.Equal("price", model.productTextData[0].propertyValue);
+            Assert.Equal("price", model.productTextData[0].productPropertyName);
 
         }
 
@@ -52,7 +56,11 @@ namespace WebScrapperTesting.Tests
                 new ProductTextDataBuilder().WithTextData("intPrice", "192.").WithTextData("fracPrice", "23").Build()
                 ).Build();
 
-            ActionModel action = new ActionModelBuilder().WithAction(ActionName.Merge, "fullPrice", "intPrice", "fracPrice").Build();
+            ActionModel action = new ActionModelBuilder().WithAction(ActionName.Merge, [
+                new ActionDataModel { actionData = "fullPrice" },
+                new ActionDataModel { actionData = "intPrice" },
+                new ActionDataModel { actionData = "fracPrice" },
+            ]).Build();
             
             //Act
             MergeAction(ref model.productTextData, action);
@@ -72,7 +80,8 @@ namespace WebScrapperTesting.Tests
                 ).Build();
 
 
-            ActionModel action = new ActionModelBuilder().WithAction(ActionName.ConvertToNumeric, "fullPrice", "","").Build();
+            ActionModel action = new ActionModelBuilder().WithAction(ActionName.ConvertToNumeric,
+                [new ActionDataModel { actionData = "price"}]).Build();
 
             //Act
             ConvertAction(ref model.productTextData, ref model.productNumericData, action);

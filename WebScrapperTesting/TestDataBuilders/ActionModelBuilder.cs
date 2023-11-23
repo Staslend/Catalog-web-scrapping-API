@@ -10,18 +10,15 @@ namespace WebScrapperTesting.TestDataBuilders
     {
         int actionId = 0;
         ActionName actionName;
-        string productPropertyName = "productPropertyName";
-        string actionData1 = "actionData1";
-        string actionData2 = "actionData2";
+        List<ActionDataModel> actionData = new();
 
         public ActionModelBuilder() { }
 
-        public ActionModelBuilder WithAction(ActionName actionName, string productPropertyName, string actionData1, string actionData2)
+        public ActionModelBuilder WithAction(ActionName actionName, List<ActionDataModel> actionData)
         {
             this.actionName = actionName;
-            this.productPropertyName = productPropertyName;
-            this.actionData1 = actionData1;
-            this.actionData2 = actionData2;
+            this.actionData = actionData;
+
             return this;
         }
 
@@ -30,19 +27,9 @@ namespace WebScrapperTesting.TestDataBuilders
             this.actionName = actionName;
             return this;
         }
-        public ActionModelBuilder WithProductPropertyName(string productPropertyName)
+        public ActionModelBuilder WithActionData(List<ActionDataModel> actionData)
         {
-            this.productPropertyName = productPropertyName;
-            return this;
-        }
-        public ActionModelBuilder WithActionData1(string actionData)
-        {
-            this.actionData1 = actionData;
-            return this;
-        }
-        public ActionModelBuilder WithActionData2(string actionData)
-        {
-            this.actionData2 = actionData;
+            this.actionData = actionData;
             return this;
         }
 
@@ -52,9 +39,7 @@ namespace WebScrapperTesting.TestDataBuilders
             {
                 actionId = 0,
                 actionName = this.actionName,
-                productPropertyName = this.productPropertyName,
-                actionData1 = this.actionData1,
-                actionData2 = this.actionData2
+                actionData  = this.actionData
             };
         }
     }

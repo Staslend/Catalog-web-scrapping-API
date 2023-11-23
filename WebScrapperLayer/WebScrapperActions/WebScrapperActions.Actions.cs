@@ -12,12 +12,12 @@ namespace WebScrapperLayer.WebScrapperActions
         protected void CutAction(ref List<ProductTextDataModel> productData, ActionModel action)
         {
             int param1, param2;
-            if (!int.TryParse(action.actionData1, out param1)) param1 = 0;
-            if (!int.TryParse(action.actionData2, out param2)) param2 = 0;
+            if (!int.TryParse(action.actionData.ElementAt(1).actionData, out param1)) param1 = 0;
+            if (!int.TryParse(action.actionData.ElementAt(2).actionData, out param2)) param2 = 0;
 
             try
             {
-                ProductTextDataModel textData = productData.Single(x => x.productPropertyName == action.productPropertyName);
+                ProductTextDataModel textData = productData.Single(x => x.productPropertyName == action.actionData.ElementAt(0).actionData);
 
                 string productPropertyData = textData.propertyValue;
                 productPropertyData = productPropertyData.Substring(param1, textData.propertyValue.Length - (param2 - param1));
@@ -32,21 +32,21 @@ namespace WebScrapperLayer.WebScrapperActions
         {
             productData.Add(new ProductTextDataModel
             {
-                productPropertyName = action.productPropertyName,
-                propertyValue = productData.Find(x => x.productPropertyName == action.actionData1).propertyValue + 
-                                productData.Find(x => x.productPropertyName == action.actionData2).propertyValue
+                productPropertyName = action.actionData.ElementAt(0).actionData,
+                propertyValue = productData.Find(x => x.productPropertyName == action.actionData.ElementAt(1).actionData).propertyValue + 
+                                productData.Find(x => x.productPropertyName == action.actionData.ElementAt(2).actionData).propertyValue
             });
-            productData.RemoveAll(x => x.productPropertyName == action.actionData1);
-            productData.RemoveAll(x => x.productPropertyName == action.actionData2);
+            productData.RemoveAll(x => x.productPropertyName == action.actionData.ElementAt(1).actionData);
+            productData.RemoveAll(x => x.productPropertyName == action.actionData.ElementAt(2).actionData);
 
         }
 
-        protected void ConvertAction(ref List<ProductTextDataModel> productTextData, ref List<ProductNumericDataModel> productNumericData, ActionModel action)
+        protected void ConvertToNumericAction(ref List<ProductTextDataModel> productTextData, ref List<ProductNumericDataModel> productNumericData, ActionModel action)
         {
             productNumericData.Add(new ProductNumericDataModel
             {
-                productPropertyName = action.productPropertyName,
-                propertyValue = double.Parse(productTextData.Single(x => x.productPropertyName == action.productPropertyName).propertyValue)
+                productPropertyName = action.actionData.ElementAt(0).actionData,
+                propertyValue = double.Parse(productTextData.Single(x => x.productPropertyName == action.actionData.ElementAt(0).actionData).propertyValue)
             }) ;
         }
     }

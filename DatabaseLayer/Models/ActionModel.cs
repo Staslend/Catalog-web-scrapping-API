@@ -5,8 +5,6 @@ namespace DatabaseLayer.Models
     public enum ActionName
     {
         Cut, 
-        CutLeft,
-        CutRight,
         Merge,
         ConvertToNumeric
     }
@@ -24,12 +22,8 @@ namespace DatabaseLayer.Models
         public int actionId { get; set; }
         [Required]
         public ActionName actionName { get; set; }
-        [Required]
-        public string productPropertyName { get; set; } = string.Empty;
 
-
-        public string actionData1 { get; set; } = string.Empty;
-        public string actionData2 { get; set;} = string.Empty;
-
+        //TODO: Shoul it be nullable?
+        public List<ActionDataModel>? actionData { get; set; }
     }
 }
