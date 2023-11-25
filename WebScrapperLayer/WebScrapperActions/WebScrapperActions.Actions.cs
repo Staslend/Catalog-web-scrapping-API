@@ -12,16 +12,16 @@ namespace WebScrapperLayer.WebScrapperActions
         protected void CutAction(ref List<ProductTextDataModel> productData, ActionModel action)
         {
             int param1, param2;
-            if (!int.TryParse(action.actionData.ElementAt(1).actionData, out param1)) param1 = 0;
-            if (!int.TryParse(action.actionData.ElementAt(2).actionData, out param2)) param2 = 0;
+            if (!int.TryParse(action.action_data.ElementAt(1).action_data, out param1)) param1 = 0;
+            if (!int.TryParse(action.action_data.ElementAt(2).action_data, out param2)) param2 = 0;
 
             try
             {
-                ProductTextDataModel textData = productData.Single(x => x.productPropertyName == action.actionData.ElementAt(0).actionData);
+                ProductTextDataModel textData = productData.Single(x => x.product_property_name == action.action_data.ElementAt(0).action_data);
 
-                string productPropertyData = textData.propertyValue;
-                productPropertyData = productPropertyData.Substring(param1, textData.propertyValue.Length - (param2 + param1));
-                textData.propertyValue = productPropertyData;
+                string productPropertyData = textData.property_value;
+                productPropertyData = productPropertyData.Substring(param1, textData.property_value.Length - (param2 + param1));
+                textData.property_value = productPropertyData;
             }
             catch (NullReferenceException  ex)
             {
@@ -32,12 +32,12 @@ namespace WebScrapperLayer.WebScrapperActions
         {
             productData.Add(new ProductTextDataModel
             {
-                productPropertyName = action.actionData.ElementAt(0).actionData,
-                propertyValue = productData.Find(x => x.productPropertyName == action.actionData.ElementAt(1).actionData).propertyValue + 
-                                productData.Find(x => x.productPropertyName == action.actionData.ElementAt(2).actionData).propertyValue
+                product_property_name = action.action_data.ElementAt(0).action_data,
+                property_value = productData.Find(x => x.product_property_name == action.action_data.ElementAt(1).action_data).property_value + 
+                                productData.Find(x => x.product_property_name == action.action_data.ElementAt(2).action_data).property_value
             });
-            productData.RemoveAll(x => x.productPropertyName == action.actionData.ElementAt(1).actionData);
-            productData.RemoveAll(x => x.productPropertyName == action.actionData.ElementAt(2).actionData);
+            productData.RemoveAll(x => x.product_property_name == action.action_data.ElementAt(1).action_data);
+            productData.RemoveAll(x => x.product_property_name == action.action_data.ElementAt(2).action_data);
 
         }
 
@@ -45,8 +45,8 @@ namespace WebScrapperLayer.WebScrapperActions
         {
             productNumericData.Add(new ProductNumericDataModel
             {
-                productPropertyName = action.actionData.ElementAt(0).actionData,
-                propertyValue = double.Parse(productTextData.Single(x => x.productPropertyName == action.actionData.ElementAt(0).actionData).propertyValue)
+                product_property_name = action.action_data.ElementAt(0).action_data,
+                property_value = double.Parse(productTextData.Single(x => x.product_property_name == action.action_data.ElementAt(0).action_data).property_value)
             }) ;
         }
     }

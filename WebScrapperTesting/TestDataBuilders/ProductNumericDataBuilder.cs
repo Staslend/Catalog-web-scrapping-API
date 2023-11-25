@@ -16,9 +16,9 @@ namespace WebScrapperTesting.TestDataBuilders
         {
             productsNumericData.Add(new ProductNumericDataModel
             {
-                productDataId = 0,
-                productPropertyName = propertyName,
-                propertyValue = propertyValue
+                product_data_id = 0,
+                product_property_name = propertyName,
+                property_value = propertyValue
             });
             return this;
         }

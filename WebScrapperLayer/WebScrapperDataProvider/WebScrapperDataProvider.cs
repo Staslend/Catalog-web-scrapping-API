@@ -28,7 +28,7 @@ namespace WebScrapperLayer.WebScrapperDataProvider
             foreach (XPathModel xPath in xPaths)
             {
                 //Web scrapping data from url by xpath
-                List<string> bufferDataList = _webScrapper.GetRawWebScrapperData(xPath.xPath, url, xPath.atribute);
+                List<string> bufferDataList = _webScrapper.GetRawWebScrapperData(xPath.xpath, url, xPath.atribute);
 
                 //Create products with data
                 if(finalProductList.Count == 0 )
@@ -41,8 +41,8 @@ namespace WebScrapperLayer.WebScrapperDataProvider
                             {
                                 new ProductTextDataModel
                                 {
-                                    productPropertyName = xPath.propertyName,
-                                    propertyValue = rawData
+                                    product_property_name = xPath.property_name,
+                                    property_value = rawData
                                 }
                             }
                         });
@@ -53,8 +53,8 @@ namespace WebScrapperLayer.WebScrapperDataProvider
                 {
                     finalProductList[productNumber].productTextData.Add(new ProductTextDataModel
                     {
-                        productPropertyName = xPath.propertyName,
-                        propertyValue = bufferDataList[productNumber]
+                        product_property_name = xPath.property_name,
+                        property_value = bufferDataList[productNumber]
                     }) ;
                 }
 

@@ -16,19 +16,19 @@ namespace WebScrapperTesting.Tests
 
             List<ActionModel> actions = [
                 new ActionModelBuilder().WithAction(ActionName.Cut, [
-                    new ActionDataModel { actionData = "fragPrice" },
-                    new ActionDataModel { actionData = "0" },
-                    new ActionDataModel { actionData = "3" }]).Build(),
+                    new ActionDataModel { action_data = "fragPrice" },
+                    new ActionDataModel { action_data = "0" },
+                    new ActionDataModel { action_data = "3" }]).Build(),
                 new ActionModelBuilder().WithAction(ActionName.Cut, [
-                    new ActionDataModel { actionData = "productName" },
-                    new ActionDataModel { actionData = "1" },
-                    new ActionDataModel { actionData = "4" }]).Build(),
+                    new ActionDataModel { action_data = "productName" },
+                    new ActionDataModel { action_data = "1" },
+                    new ActionDataModel { action_data = "4" }]).Build(),
                 new ActionModelBuilder().WithAction(ActionName.ConvertToNumeric, [
-                    new ActionDataModel { actionData = "fullPrice" }]).Build(),
+                    new ActionDataModel { action_data = "fullPrice" }]).Build(),
                 new ActionModelBuilder().WithAction(ActionName.Merge, [
-                    new ActionDataModel { actionData = "fullPrice" },
-                    new ActionDataModel { actionData = "intPrice" },
-                    new ActionDataModel { actionData = "fragPrice" }]).Build(),
+                    new ActionDataModel { action_data = "fullPrice" },
+                    new ActionDataModel { action_data = "intPrice" },
+                    new ActionDataModel { action_data = "fragPrice" }]).Build(),
             ];
 
 
@@ -36,8 +36,8 @@ namespace WebScrapperTesting.Tests
             productNumericData = ProcessActions(ref productTextData, actions);
 
             //Assert
-            Assert.Equal(15.50, productNumericData[0].propertyValue);
-            Assert.Equal("Tomato", productTextData.Single(x => x.productPropertyName == "productName").propertyValue);
+            Assert.Equal(15.50, productNumericData[0].property_value);
+            Assert.Equal("Tomato", productTextData.Single(x => x.product_property_name == "productName").property_value);
         }
 
         [Fact]
@@ -52,19 +52,19 @@ namespace WebScrapperTesting.Tests
 
             List<ActionModel> actions = [
                 new ActionModelBuilder().WithAction(ActionName.Cut, [
-                    new ActionDataModel { actionData = "fragPrice" },
-                    new ActionDataModel { actionData = "0" },
-                    new ActionDataModel { actionData = "3" }]).Build(),
+                    new ActionDataModel { action_data = "fragPrice" },
+                    new ActionDataModel { action_data = "0" },
+                    new ActionDataModel { action_data = "3" }]).Build(),
                 new ActionModelBuilder().WithAction(ActionName.Cut, [
-                    new ActionDataModel { actionData = "productName" },
-                    new ActionDataModel { actionData = "1" },
-                    new ActionDataModel { actionData = "4" }]).Build(),
+                    new ActionDataModel { action_data = "productName" },
+                    new ActionDataModel { action_data = "1" },
+                    new ActionDataModel { action_data = "4" }]).Build(),
                 new ActionModelBuilder().WithAction(ActionName.ConvertToNumeric, [
-                    new ActionDataModel { actionData = "fullPrice" }]).Build(),
+                    new ActionDataModel { action_data = "fullPrice" }]).Build(),
                 new ActionModelBuilder().WithAction(ActionName.Merge, [
-                    new ActionDataModel { actionData = "fullPrice" },
-                    new ActionDataModel { actionData = "intPrice" },
-                    new ActionDataModel { actionData = "fragPrice" }]).Build(),
+                    new ActionDataModel { action_data = "fullPrice" },
+                    new ActionDataModel { action_data = "intPrice" },
+                    new ActionDataModel { action_data = "fragPrice" }]).Build(),
             ];
 
             List<ProductModel> productList = [new ProductModel
@@ -78,8 +78,8 @@ namespace WebScrapperTesting.Tests
             List<ProductModel> newProductList = ProcessProductData(productList, actions);
 
             //Assert
-            Assert.Equal(15.50, newProductList[0].productNumericData[0].propertyValue);
-            Assert.Equal("Tomato", newProductList[0].productTextData.Single(x => x.productPropertyName == "productName").propertyValue);
+            Assert.Equal(15.50, newProductList[0].productNumericData[0].property_value);
+            Assert.Equal("Tomato", newProductList[0].productTextData.Single(x => x.product_property_name == "productName").property_value);
         }
         [Fact]
         public void ProcessProductData_ProductWithWrongRawData_EmptyProductListReturned()
@@ -93,19 +93,19 @@ namespace WebScrapperTesting.Tests
 
             List<ActionModel> actions = [
                 new ActionModelBuilder().WithAction(ActionName.Cut, [
-                    new ActionDataModel { actionData = "fragPrice" },
-                    new ActionDataModel { actionData = "0" },
-                    new ActionDataModel { actionData = "3" }]).Build(),
+                    new ActionDataModel { action_data = "fragPrice" },
+                    new ActionDataModel { action_data = "0" },
+                    new ActionDataModel { action_data = "3" }]).Build(),
                 new ActionModelBuilder().WithAction(ActionName.Cut, [
-                    new ActionDataModel { actionData = "productName" },
-                    new ActionDataModel { actionData = "1" },
-                    new ActionDataModel { actionData = "4" }]).Build(),
+                    new ActionDataModel { action_data = "productName" },
+                    new ActionDataModel { action_data = "1" },
+                    new ActionDataModel { action_data = "4" }]).Build(),
                 new ActionModelBuilder().WithAction(ActionName.ConvertToNumeric, [
-                    new ActionDataModel { actionData = "fullPrice" }]).Build(),
+                    new ActionDataModel { action_data = "fullPrice" }]).Build(),
                 new ActionModelBuilder().WithAction(ActionName.Merge, [
-                    new ActionDataModel { actionData = "fullPrice" },
-                    new ActionDataModel { actionData = "intPrice" },
-                    new ActionDataModel { actionData = "fragPrice" }]).Build(),
+                    new ActionDataModel { action_data = "fullPrice" },
+                    new ActionDataModel { action_data = "intPrice" },
+                    new ActionDataModel { action_data = "fragPrice" }]).Build(),
             ];
 
             List<ProductModel> productList = [new ProductModel

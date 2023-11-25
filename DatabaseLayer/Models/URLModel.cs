@@ -10,8 +10,10 @@ namespace DatabaseLayer.Models
     internal class URLModel
     {
         [Key]
-        public int urlId { get; set; }
+        public int url_id { get; set; }
         public string url { get; set; }
+
+        public string url_name { get; set; } = string.Empty;
 
         //Reference to URL specific actions and xPaths
         public List<ActionModel>? actions { get; set; }

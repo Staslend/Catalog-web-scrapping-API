@@ -37,9 +37,9 @@ namespace WebScrapperTesting.TestDataBuilders
         {
             return new ActionModel
             {
-                actionId = 0,
-                actionName = this.actionName,
-                actionData  = this.actionData
+                action_id = 0,
+                action_name = this.actionName,
+                action_data  = this.actionData
             };
         }
     }

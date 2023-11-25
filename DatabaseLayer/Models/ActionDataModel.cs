@@ -10,13 +10,13 @@ namespace DatabaseLayer.Models
     public class ActionDataModel
     {
         //Reference to the action
-        public int actionId { get; set; }
+        public int action_id { get; set; }
         public ActionModel action { get; set; }
 
 
         [Key]
-        public int actionDataId { get; set; }
+        public int action_data_id { get; set; }
 
-        public string actionData { get; set; } = string.Empty;
+        public string action_data { get; set; } = string.Empty;
     }
 }

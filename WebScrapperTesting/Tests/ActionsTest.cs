@@ -34,17 +34,17 @@ namespace WebScrapperTesting.Tests
                 ).Build();
 
             ActionModel action = new ActionModelBuilder().WithAction(ActionName.Cut, [
-                new ActionDataModel { actionData = "price" },
-                new ActionDataModel { actionData ="0"},
-                new ActionDataModel { actionData = "3"},
+                new ActionDataModel { action_data = "price" },
+                new ActionDataModel { action_data ="0"},
+                new ActionDataModel { action_data = "3"},
             ]).Build();
 
             //Act
 
             CutAction(ref model.productTextData, action);
             //Assert
-            Assert.Equal("192.23", model.productTextData[0].propertyValue);
-            Assert.Equal("price", model.productTextData[0].productPropertyName);
+            Assert.Equal("192.23", model.productTextData[0].property_value);
+            Assert.Equal("price", model.productTextData[0].product_property_name);
 
         }
 
@@ -57,17 +57,17 @@ namespace WebScrapperTesting.Tests
                 ).Build();
 
             ActionModel action = new ActionModelBuilder().WithAction(ActionName.Merge, [
-                new ActionDataModel { actionData = "fullPrice" },
-                new ActionDataModel { actionData = "intPrice" },
-                new ActionDataModel { actionData = "fracPrice" },
+                new ActionDataModel { action_data = "fullPrice" },
+                new ActionDataModel { action_data = "intPrice" },
+                new ActionDataModel { action_data = "fracPrice" },
             ]).Build();
             
             //Act
             MergeAction(ref model.productTextData, action);
 
             //Assert
-            Assert.Equal("192.23", model.productTextData[0].propertyValue);
-            Assert.Equal("fullPrice", model.productTextData[0].productPropertyName);
+            Assert.Equal("192.23", model.productTextData[0].property_value);
+            Assert.Equal("fullPrice", model.productTextData[0].product_property_name);
 
         }
 
@@ -81,13 +81,13 @@ namespace WebScrapperTesting.Tests
 
 
             ActionModel action = new ActionModelBuilder().WithAction(ActionName.ConvertToNumeric,
-                [new ActionDataModel { actionData = "price"}]).Build();
+                [new ActionDataModel { action_data = "price"}]).Build();
 
             //Act
             ConvertToNumericAction(ref model.productTextData, ref model.productNumericData, action);
 
             //Assert
-            Assert.Equal(192.23, model.productNumericData[0].propertyValue);
+            Assert.Equal(192.23, model.productNumericData[0].property_value);
         }
     }
 }

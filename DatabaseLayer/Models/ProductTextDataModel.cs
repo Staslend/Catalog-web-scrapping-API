@@ -9,12 +9,12 @@ namespace DatabaseLayer.Models
 {
     public class ProductTextDataModel
     {
-        public int productId { get; set; }
+        public int product_id { get; set; }
         public ProductModel product { get; set; }
 
         [Key]
-        public int productDataId { get; set; }
-        public string productPropertyName { get; set; } = string.Empty;
-        public string propertyValue { get; set; } = string.Empty;
+        public int product_data_id { get; set; }
+        public string product_property_name { get; set; } = string.Empty;
+        public string property_value { get; set; } = string.Empty;
     }
 }

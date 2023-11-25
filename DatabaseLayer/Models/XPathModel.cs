@@ -6,10 +6,10 @@ namespace DatabaseLayer.Models
     {
 
         [Key]
-        public int xPathId { get; set; }
-        public string xPath { get; set; } = String.Empty;
+        public int xpath_id { get; set; }
+        public string xpath { get; set; } = String.Empty;
         [Required]
-        public string propertyName { get; set; } = String.Empty;
+        public string property_name { get; set; } = String.Empty;
         public string atribute { get; set; } = String.Empty;
     }
 }

@@ -22,10 +22,10 @@ namespace DatabaseLayer.Models
     public class ActionModel
     {
         [Key]
-        public int actionId { get; set; }
+        public int action_id { get; set; }
         [Required]
-        public ActionName actionName { get; set; }
+        public ActionName action_name { get; set; }
 
-        public List<ActionDataModel>? actionData { get; set; }
+        public List<ActionDataModel>? action_data { get; set; }
     }
 }

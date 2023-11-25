@@ -34,7 +34,7 @@ namespace WebScrapperLayer.WebScrapperActions
         {
             try
             {
-                switch (action.actionName)
+                switch (action.action_name)
                 {
                     case ActionName.Cut:
                         {
@@ -65,16 +65,16 @@ namespace WebScrapperLayer.WebScrapperActions
         {
             List<ProductNumericDataModel> numericProductData = new List<ProductNumericDataModel>();
 
-            foreach(ActionModel action in actions.Where(x => GetActionType(x.actionName) == ActionType.Editing).ToList())
+            foreach(ActionModel action in actions.Where(x => GetActionType(x.action_name) == ActionType.Editing).ToList())
             {
                 ActionRunnder(ref productRawData, ref numericProductData, action);
             }
-            foreach (ActionModel action in actions.Where(x => GetActionType(x.actionName) == ActionType.Merging).ToList())
+            foreach (ActionModel action in actions.Where(x => GetActionType(x.action_name) == ActionType.Merging).ToList())
             {
                 ActionRunnder(ref productRawData, ref numericProductData, action);
 
             }
-            foreach (ActionModel action in actions.Where(x => GetActionType(x.actionName) == ActionType.Converting).ToList())
+            foreach (ActionModel action in actions.Where(x => GetActionType(x.action_name) == ActionType.Converting).ToList())
             {
                 ActionRunnder(ref productRawData, ref numericProductData, action);
             }

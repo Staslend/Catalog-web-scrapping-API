@@ -6,20 +6,20 @@ namespace DatabaseLayer.Models
     {
         
         [Key]
-        public int shopId { get; set; }
+        public int shop_id { get; set; }
             
         //Shop data
         [Required]
-        public string shopName { get; set; } = string.Empty;
+        public string shop_name { get; set; } = string.Empty;
 
         [Required]
-        public string shopDomainName { get; set; } = string.Empty;
+        public string shop_domain_name { get; set; } = string.Empty;
 
 
         //Reference to general actions and xPaths
         public List<ActionModel>? actions { get; set; }
 
-        public List<XPathModel>? xPaths { get; set; }
+        public List<XPathModel>? xpaths { get; set; }
 
 
     }
