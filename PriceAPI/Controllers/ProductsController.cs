@@ -5,7 +5,7 @@ namespace PriceAPI.Controllers
 {
     [Route("/api/[action]")]
     [ApiController]
-    public class ProductsController : Controller
+    public class ProductsController : ControllerBase
     {
         IPriceAPIService _priceApiService;
 
