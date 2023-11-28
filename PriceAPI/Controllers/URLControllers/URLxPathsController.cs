@@ -2,7 +2,9 @@
 
 namespace PriceAPI.Controllers.URLControllers
 {
-    public partial class URLController : ControllerBase
+    [Route("api/")]
+    [ApiController]
+    public class URLxPathController : ControllerBase
     {
         [HttpGet("urls/{url_name}/xpaths")]
         public JsonResult GetXPaths(string url_name)
@@ -11,7 +13,7 @@ namespace PriceAPI.Controllers.URLControllers
             return new JsonResult("");
         }
         [HttpPost("urls/{url_name}/xpaths/add")]
-        public void AddXPaths(string url_name)
+        public void AddXPaths(string url_name, string xpath, string property, string atribute)
         {
             //ADD XPATH FUNC
         }

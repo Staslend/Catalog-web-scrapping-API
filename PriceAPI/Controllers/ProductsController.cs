@@ -14,19 +14,6 @@ namespace PriceAPI.Controllers
             _priceApiService = priceAPIService;
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-        [HttpGet]
-        public async Task<JsonResult> ProductsWebScrapped(string productName = "", string sorting = "", List<string> shops = null)
-        {
-            var res = await _priceApiService.GetProductsWebScrapped();
-
-            return new JsonResult(res);
-        }
-
         [HttpGet]
         public async Task<JsonResult> Products(string productName = "", string sorting = "", List<string> shops = null)
         {

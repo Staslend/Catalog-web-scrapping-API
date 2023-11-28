@@ -24,8 +24,4 @@
     <ProjectReference Include="..\DatabaseLayer\DatabaseLayer.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Services%28new%29\" />
-  </ItemGroup>
-
 </Project>

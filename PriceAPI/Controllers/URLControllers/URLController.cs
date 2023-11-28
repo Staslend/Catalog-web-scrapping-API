@@ -2,7 +2,9 @@
 
 namespace PriceAPI.Controllers.URLControllers
 {
-    public partial class URLController : ControllerBase
+    [Route("api/")]
+    [ApiController]
+    public class URLController : ControllerBase
     {
 
         [HttpGet("urls/")]
@@ -13,7 +15,7 @@ namespace PriceAPI.Controllers.URLControllers
         }
 
         [HttpPost("urls/add/")]
-        public void AddURL(string url_name, string url)
+        public void AddURL(string url_name, string url, string shop_domain_name)
         {
             //ADD URL FUNC
         }

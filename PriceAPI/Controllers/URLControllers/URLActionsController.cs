@@ -3,8 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace PriceAPI.Controllers.URLControllers
 {
+    [Route("api/")]
     [ApiController]
-    public partial class URLController : ControllerBase
+    public partial class URLActionsController : ControllerBase
     {
         [HttpGet("urls/{url_name}/actions")]
         public JsonResult GetActions(string url_name)
