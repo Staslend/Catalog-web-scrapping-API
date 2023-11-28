@@ -17,6 +17,11 @@ namespace PriceAPI.Controllers.URLControllers
         {
             //ADD XPATH FUNC
         }
+        [HttpDelete("urls/{url_name}/xpaths")]
+        public void GetXPaths(string url_name, int xpathId)
+        {
+            //DELETE FUNCTION
+        }
 
     }
 }

@@ -18,6 +18,11 @@ namespace PriceAPI.Controllers.ShopControllers
         {
             //ADD XPATH FUNC
         }
+        [HttpDelete("shops/{shop_domain_name}/xpaths/delete")]
+        public void DeleteAction(string shop_domain_name, int xpathId)
+        {
+            //DELETE FUNCTION
+        }
 
     }
 }

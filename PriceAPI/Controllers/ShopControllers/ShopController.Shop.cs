@@ -14,7 +14,7 @@ namespace PriceAPI.Controllers.ShopControllers
         }
 
         [HttpPost("shops/add/")]
-        public void AddURL(string shop_name, string shop_domain_name)
+        public void AddShop(string shop_name, string shop_domain_name)
         {
             //ADD SHOP FUNC
         }
@@ -22,11 +22,6 @@ namespace PriceAPI.Controllers.ShopControllers
         public void DeleteShop(string shop_domain_name)
         {
             //DELETE URL FUNC
-        }
-        [HttpPatch("shops/{shop_id}/")]
-        public void ChangeShop(string shop_id, string new_url)
-        {
-            //CHANGE URL FUNC
         }
 
     }

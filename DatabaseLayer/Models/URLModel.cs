@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DatabaseLayer.Models
 {
-    internal class URLModel
+    public class URLModel
     {
         [Key]
         public int url_id { get; set; }

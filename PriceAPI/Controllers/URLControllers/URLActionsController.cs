@@ -20,5 +20,11 @@ namespace PriceAPI.Controllers.URLControllers
             //ADD NEW ACTION FUNC
         }
 
+        [HttpDelete("urls/{url_name}/actions/add")]
+        public void DeleteAction(string url_name, int actionId)
+        {
+            //DELTE ACTION
+        }
+
     }
 }
