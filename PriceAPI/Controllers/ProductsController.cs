@@ -1,32 +1,31 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PriceAPI.Services.ProductService;
+using PriceAPI.Services_new_.ProductService;
 
 namespace PriceAPI.Controllers
 {
-    [Route("/api/[action]")]
+    [Route("api/")]
     [ApiController]
     public class ProductsController : ControllerBase
     {
-        IPriceAPIService _priceApiService;
+        IProductService _productService;
 
-        public ProductsController(IPriceAPIService priceAPIService)
+        public ProductsController(IProductService productService)
         {
-            _priceApiService = priceAPIService;
+            _productService = productService;
         }
 
-        [HttpGet]
-        public async Task<JsonResult> Products(string productName = "", string sorting = "", List<string> shops = null)
+        [HttpGet("products/")]
+        public async Task<JsonResult> Products(int? page, string? orderby ="product_id")
         {
-            var res = await _priceApiService.GetJSONProductsFromDb(productName, sorting, shops);
-
-            return new JsonResult(res);
+            return new JsonResult(_productService.GetProducts(page));
         }
 
         //TODO: Bad responce 
         [HttpPut]
         public async Task<IActionResult> Update()
         {   
-            await _priceApiService.UpdateDatabase();
+            _productService.UpdateProducts();
             return Ok("Updade started");
         }
     }

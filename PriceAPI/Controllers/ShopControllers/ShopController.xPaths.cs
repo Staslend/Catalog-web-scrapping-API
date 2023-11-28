@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PriceAPI.Services_new_.XPathService;
 
 namespace PriceAPI.Controllers.ShopControllers
 {
@@ -7,21 +8,26 @@ namespace PriceAPI.Controllers.ShopControllers
 
     public class ShopxPathsController : ControllerBase
     {
+        IXPathService _xPathService;
+        ShopxPathsController(IXPathService xPathService)
+        {
+            _xPathService = xPathService;
+        }
+
         [HttpGet("shops/{shop_domain_name}/xpaths")]
         public JsonResult GetXPaths(string shop_domain_name)
         {
-            //GET ALL XPATHS FUNC
-            return new JsonResult("");
+            return new JsonResult(_xPathService.GetShopxPaths(shop_domain_name));
         }
         [HttpPost("shops/{shop_domain_name}/xpaths/add")]
         public void AddXPaths(string shop_domain_name, string xpath, string property, string atribute)
         {
-            //ADD XPATH FUNC
+            _xPathService.AddShopxPaths(shop_domain_name, xpath, property, atribute);
         }
         [HttpDelete("shops/{shop_domain_name}/xpaths/delete")]
         public void DeleteAction(string shop_domain_name, int xpathId)
         {
-            //DELETE FUNCTION
+            _xPathService.DeleteShopxPaths(shop_domain_name, xpathId);
         }
 
     }
