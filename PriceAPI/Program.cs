@@ -10,6 +10,8 @@ using PriceAPI.Services_new_.ShopService;
 using PriceAPI.Services_new_.URLService;
 using PriceAPI.Services_new_.XPathService;
 
+using WebScrapperLayer.WebScrapperDataProvider;
+
 namespace PriceAPI
 {
     public class Program
@@ -33,7 +35,7 @@ namespace PriceAPI
             builder.Services.AddScoped<IURLService, URLService>();
             builder.Services.AddScoped<IXPathService, XPathService>();
 
-            builder.Services.AddSingleton<IWebScrapper, WebScrapper>();
+            builder.Services.AddSingleton<IWebScrapperDataProvider, WebScrapperDataProvider>();
 
             builder.Services.AddSingleton<ILinkService, RawLinkService>();
             builder.Services.AddSingleton<IShopNameService, ShopNameService>();

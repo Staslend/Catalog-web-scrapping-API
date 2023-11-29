@@ -16,7 +16,7 @@ namespace PriceAPI.Controllers
         }
 
         [HttpGet("products/")]
-        public async Task<JsonResult> Products(int? page, string? orderby ="product_id")
+        public async Task<JsonResult> Products(int? page, string orderby ="product_id")
         {
             return new JsonResult(_productService.GetProducts(page));
         }

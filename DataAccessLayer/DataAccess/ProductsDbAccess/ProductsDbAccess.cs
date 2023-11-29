@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer.DataAccess.ProductsDbAccess
 {
-    internal class ProductsDbAccess : IProductsDbAccess
+    public class ProductsDbAccess : IProductsDbAccess
     {
         public void AddDbProductData(List<ProductModel> products)
         {

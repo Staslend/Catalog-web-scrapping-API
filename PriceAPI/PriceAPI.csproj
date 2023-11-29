@@ -23,6 +23,7 @@
   <ItemGroup>
     <ProjectReference Include="..\DataAccessLayer\DataAccessLayer.csproj" />
     <ProjectReference Include="..\DatabaseLayer\DatabaseLayer.csproj" />
+    <ProjectReference Include="..\WebScrapperLayer\WebScrapperLayer.csproj" />
   </ItemGroup>
 
 </Project>

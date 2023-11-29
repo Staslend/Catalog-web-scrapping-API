@@ -5,12 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccessLayer.DataAccess.ProductsDbAccess.ProductsDbAccess
+namespace DataAccessLayer.DataAccess.ProductsDbAccess
 {
-    internal interface IProductsDbAccess
+    public interface IProductsDbAccess
     {
         public void ClearDbProductData();
         public void AddDbProductData(List<ProductModel> products);
-        List<ProductModel> GetProducts(int page);
+        List<ProductModel> GetProducts(int? page, string orderby);
     }
 }

@@ -19,5 +19,9 @@ namespace DatabaseLayer.Models
         public List<ActionModel>? actions { get; set; }
 
         public List<XPathModel>? xPaths { get; set; }
+
+        public string? shop_id { get; set; }
+        public ShopModel? shop { get; set; }
+
     }
 }

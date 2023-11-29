@@ -19,7 +19,7 @@ namespace DatabaseLayer.Models
         //Reference to general actions and xPaths
         public List<ActionModel>? actions { get; set; }
 
-        public List<XPathModel>? xpaths { get; set; }
+        public List<XPathModel>? xPaths { get; set; }
 
 
     }

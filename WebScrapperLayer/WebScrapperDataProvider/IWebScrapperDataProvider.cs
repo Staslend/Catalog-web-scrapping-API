@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace WebScrapperLayer.WebScrapperDataProvider
 {
-    internal interface IWebScrapperDataProvider
+    public interface IWebScrapperDataProvider
     {
         public List<ProductModel> GetProductsData(List<XPathModel> xPaths, List<ActionModel> actions, string url);
 
