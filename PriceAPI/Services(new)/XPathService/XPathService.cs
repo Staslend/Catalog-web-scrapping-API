@@ -1,37 +1,44 @@
 ﻿using DatabaseLayer.Models;
+using DataAccessLayer.DataAccess.XPathDbAccess;
 
 namespace PriceAPI.Services_new_.XPathService
 {
     public class XPathService : IXPathService
     {
+        IXPathsDbAccess _xPathService;
+        XPathService(IXPathsDbAccess xPathService)
+        {
+            _xPathService = xPathService;
+        }
+
         public void AddShopxPaths(string shopName, string xpath, string property, string atribute)
         {
-            throw new NotImplementedException();
+            _xPathService.AddShopxPaths(shopName, xpath, property, atribute);
         }
 
         public void AddURLxPaths(string urlName, string xpath, string property, string atribute)
         {
-            throw new NotImplementedException();
+            _xPathService.AddShopxPaths(urlName, xpath, property, atribute);
         }
 
         public void DeleteShopxPaths(string shopName, int xPathId)
         {
-            throw new NotImplementedException();
+            _xPathService.DeleteShopxPaths(shopName, xPathId);
         }
 
         public void DeleteURLxPaths(string urlName, int xPathId)
         {
-            throw new NotImplementedException();
+            _xPathService.DeleteURLxPaths(urlName, xPathId);
         }
 
         public List<XPathModel> GetShopxPaths(string shopName)
         {
-            throw new NotImplementedException();
+            return _xPathService.GetShopxPaths(shopName);
         }
 
         public List<XPathModel> GetURLxPaths(string urlName)
         {
-            throw new NotImplementedException();
+            return _xPathService.GetURLxPaths(urlName);
         }
     }
 }

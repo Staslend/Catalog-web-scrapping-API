@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DatabaseLayer\DatabaseLayer.csproj" />
-    <ProjectReference Include="..\PriceAPI\PriceAPI.csproj" />
   </ItemGroup>
 
 </Project>

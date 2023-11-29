@@ -33,6 +33,8 @@ namespace PriceAPI
             builder.Services.AddScoped<IURLService, URLService>();
             builder.Services.AddScoped<IXPathService, XPathService>();
 
+            builder.Services.AddSingleton<IWebScrapper, WebScrapper>();
+
             builder.Services.AddSingleton<ILinkService, RawLinkService>();
             builder.Services.AddSingleton<IShopNameService, ShopNameService>();
 

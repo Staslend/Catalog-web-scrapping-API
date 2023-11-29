@@ -11,7 +11,9 @@ namespace PriceAPI.Services_new_.ProductService
 
         public void UpdateProducts()
         {
-            throw new NotImplementedException();
+            //CLEAR DB FUNCTION
+
+
         }
     }
 }

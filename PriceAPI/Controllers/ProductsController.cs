@@ -22,7 +22,7 @@ namespace PriceAPI.Controllers
         }
 
         //TODO: Bad responce 
-        [HttpPut]
+        [HttpPatch("products/")]
         public async Task<IActionResult> Update()
         {   
             _productService.UpdateProducts();

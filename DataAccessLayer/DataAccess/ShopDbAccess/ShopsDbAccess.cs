@@ -5,21 +5,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccessLayer.DataAccess
+namespace DataAccessLayer.DataAccess.ShopDbAccess
 {
-    internal class ProductsDbAccess : IProductsDbAccess
+    internal class ShopsDbAccess : IShopsDbAccess
     {
-        public void AddDbProductData(List<ProductModel> products)
+        public void AddShop(string shop_name, string shop_domain_name)
         {
             throw new NotImplementedException();
         }
 
-        public void ClearDbProductData()
+        public void DeleteShop(string shop_domain_name)
         {
             throw new NotImplementedException();
         }
 
-        public List<ProductModel> GetProducts(int page)
+        public List<ShopModel> GetShops()
         {
             throw new NotImplementedException();
         }
