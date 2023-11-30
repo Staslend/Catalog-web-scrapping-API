@@ -8,8 +8,8 @@ namespace DatabaseLayer.Models
         public int product_id { get; set; }
 
         //Reference to data relations
-        public List<ProductNumericDataModel>? productNumericData;
-        public List<ProductTextDataModel>? productTextData;
+        public List<ProductNumericDataModel>? product_numeric_data { get; set; }
+        public List<ProductTextDataModel>? product_text_data { get; set; }
 
         //Shop reference
         public string? shop_id { get; set; }

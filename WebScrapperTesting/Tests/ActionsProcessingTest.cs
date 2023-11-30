@@ -69,8 +69,8 @@ namespace WebScrapperTesting.Tests
 
             List<ProductModel> productList = [new ProductModel
             {
-                productNumericData = productNumericData,
-                productTextData = productTextData,
+                product_numeric_data = productNumericData,
+                product_text_data = productTextData,
 
             }];
 
@@ -78,8 +78,8 @@ namespace WebScrapperTesting.Tests
             List<ProductModel> newProductList = ProcessProductData(productList, actions);
 
             //Assert
-            Assert.Equal(15.50, newProductList[0].productNumericData[0].property_value);
-            Assert.Equal("Tomato", newProductList[0].productTextData.Single(x => x.product_property_name == "productName").property_value);
+            Assert.Equal(15.50, newProductList[0].product_numeric_data[0].property_value);
+            Assert.Equal("Tomato", newProductList[0].product_text_data.Single(x => x.product_property_name == "productName").property_value);
         }
         [Fact]
         public void ProcessProductData_ProductWithWrongRawData_EmptyProductListReturned()
@@ -110,8 +110,8 @@ namespace WebScrapperTesting.Tests
 
             List<ProductModel> productList = [new ProductModel
             {
-                productNumericData = productNumericData,
-                productTextData = productTextData,
+                product_numeric_data = productNumericData,
+                product_text_data = productTextData,
 
             }];
 

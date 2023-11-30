@@ -9,7 +9,6 @@ namespace DatabaseLayer.Models
         public int shop_id { get; set; }
             
         //Shop data
-        [Required]
         public string shop_name { get; set; } = string.Empty;
 
         [Required]
