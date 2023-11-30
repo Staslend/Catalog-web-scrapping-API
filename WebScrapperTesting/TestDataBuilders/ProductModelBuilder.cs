@@ -42,8 +42,8 @@ namespace WebScrapperTesting.WebScrapperDataFactory
         {
             return new ProductModel
             {
-                productNumericData = productNumericData,
-                productTextData = productTextData
+                product_numeric_data = productNumericData,
+                product_text_data = productTextData
             };
         }
 

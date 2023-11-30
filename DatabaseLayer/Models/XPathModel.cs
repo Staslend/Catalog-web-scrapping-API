@@ -10,6 +10,6 @@ namespace DatabaseLayer.Models
         public string xpath { get; set; } = String.Empty;
         [Required]
         public string property_name { get; set; } = String.Empty;
-        public string atribute { get; set; } = String.Empty;
+        public string? atribute { get; set; } = String.Empty;
     }
 }

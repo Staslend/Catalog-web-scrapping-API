@@ -84,9 +84,15 @@ namespace WebScrapperLayer.WebScrapperActions
 
         public List<ProductModel> ProcessProductData(List<ProductModel> rawProducts, List<ActionModel> actions)
         {
+            List<ProductTextDataModel> productData;
+
             foreach (var rawProduct in rawProducts)
             {
-                rawProduct.productNumericData = ProcessActions(ref rawProduct.productTextData, actions);
+                productData = rawProduct.product_text_data;
+
+                rawProduct.product_numeric_data = ProcessActions(ref productData, actions);
+
+                rawProduct.product_text_data = productData;
 
                 if(errorOccured) return new List<ProductModel>();
             }

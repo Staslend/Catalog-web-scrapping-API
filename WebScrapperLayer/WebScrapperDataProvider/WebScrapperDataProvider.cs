@@ -37,7 +37,7 @@ namespace WebScrapperLayer.WebScrapperDataProvider
                     {
                         finalProductList.Add(new ProductModel
                         {
-                            productTextData = new List<ProductTextDataModel>
+                            product_text_data = new List<ProductTextDataModel>
                             {
                                 new ProductTextDataModel
                                 {
@@ -51,7 +51,7 @@ namespace WebScrapperLayer.WebScrapperDataProvider
  
                 for(int productNumber = 0; productNumber < finalProductList.Count; productNumber++)
                 {
-                    finalProductList[productNumber].productTextData.Add(new ProductTextDataModel
+                    finalProductList[productNumber].product_text_data.Add(new ProductTextDataModel
                     {
                         product_property_name = xPath.property_name,
                         property_value = bufferDataList[productNumber]

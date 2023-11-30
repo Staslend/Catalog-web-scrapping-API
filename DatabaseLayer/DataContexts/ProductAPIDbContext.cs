@@ -8,13 +8,14 @@ using System.Threading.Tasks;
 
 namespace DatabaseLayer.DataContexts
 {
-    internal class ProductAPIDbContext : DbContext
+    public class ProductAPIDbContext : DbContext
     {
         public DbSet<ProductModel> products { get; set; }
-        public DbSet<ShopModel> shops { get; set; }
-        public DbSet<XPathModel> xpaths { get; set; }
-        public DbSet<ActionModel> actions { get; set; }
+        public DbSet<ProductNumericDataModel> productsNumericData { get; set; }
+        public DbSet<ProductTextDataModel> productsTextData { get; set; }
 
+        public DbSet<ShopModel> shops { get; set; }
+        public DbSet<URLModel> URLs { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

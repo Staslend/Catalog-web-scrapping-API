@@ -9,12 +9,12 @@ namespace DataAccessLayer.DataAccess.ActionDbAccess
 {
     public interface IActionsDbAccess
     {
-        public List<ActionModel> GetURLActions(string urlName);
-        public List<ActionModel> GetShopActions(string shopName);
-        public void AddURLAction(string urlName, ActionName action_name, List<string> action_data);
-        public void AddShopAction(string shopName, ActionName action_name, List<string> action_data);
-        public void DeleteURLAction(string urlName, int actionId);
-        public void DeleteShopAction(string shopName, int actionId);
+        public List<ActionModel> GetURLActions(int URLId);
+        public List<ActionModel> GetShopActions(int shopId);
+        public void AddURLAction(int URLId, ActionName actionName, List<string> actionData);
+        public void AddShopAction(int shopId, ActionName actionName, List<string> actionData);
+        public void DeleteURLAction(int URLId, int actionId);
+        public void DeleteShopAction(int shopId, int actionId);
 
     }
 }

@@ -10,9 +10,9 @@ namespace DataAccessLayer.DataAccess.URLDbAccess
     public interface IURLsDbAccess
     {
         public List<URLModel> GetURLs();
-        public void AddURL(string url_name, string url, string shop_domain_name);
-        public void DeleteURL(string url_name);
-        public void ChangeURL(string url_name, string new_url);
+        public void AddURL(string URLName, string URL, int shopId);
+        public void DeleteURL(int URLId);
+        public void ChangeURL(int URLId, string newURL);
 
     }
 }
