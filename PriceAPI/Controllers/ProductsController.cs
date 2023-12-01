@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PriceAPI.Services.ProductService;
-using PriceAPI.Services_new_.ProductService;
+using PriceAPI.Services.ProductService;
 
 namespace PriceAPI.Controllers
 {

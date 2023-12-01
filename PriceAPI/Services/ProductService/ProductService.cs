@@ -3,7 +3,7 @@ using DataAccessLayer.DataAccess.URLDbAccess;
 using DatabaseLayer.Models;
 using WebScrapperLayer.WebScrapperDataProvider;
 
-namespace PriceAPI.Services_new_.ProductService
+namespace PriceAPI.Services.ProductService
 {
     public class ProductService : IProductService
     {

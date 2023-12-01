@@ -1,7 +1,6 @@
 ﻿using DataAccessLayer.DataAccess.ActionDbAccess;
 using DatabaseLayer.Models;
 using Microsoft.AspNetCore.Mvc;
-using PriceAPI.Services_new_.ActionService;
 
 namespace PriceAPI.Controllers.ShopControllers
 {

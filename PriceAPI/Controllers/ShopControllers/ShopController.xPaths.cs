@@ -1,6 +1,5 @@
 ﻿using DataAccessLayer.DataAccess.XPathDbAccess;
 using Microsoft.AspNetCore.Mvc;
-using PriceAPI.Services_new_.XPathService;
 
 namespace PriceAPI.Controllers.ShopControllers
 {

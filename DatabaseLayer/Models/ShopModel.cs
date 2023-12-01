@@ -20,6 +20,7 @@ namespace DatabaseLayer.Models
 
         public List<XPathModel>? xPaths { get; set; }
 
+        public string pageProperty { get; set; } = "?page=";
 
     }
 }

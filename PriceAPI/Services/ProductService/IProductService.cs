@@ -1,6 +1,6 @@
 ﻿using DatabaseLayer.Models;
 
-namespace PriceAPI.Services_new_.ProductService
+namespace PriceAPI.Services.ProductService
 {
     public interface IProductService
     {
