@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DataAccessLayer.DataAccess.XPathDbAccess;
+using Microsoft.AspNetCore.Mvc;
 using PriceAPI.Services_new_.XPathService;
 
 namespace PriceAPI.Controllers.URLControllers
@@ -8,27 +9,27 @@ namespace PriceAPI.Controllers.URLControllers
     public class URLxPathController : ControllerBase
     {
 
-        IXPathService _xPathService;
-        URLxPathController(IXPathService xPathService)
+        IXPathsDbAccess _xPathDbAccess;
+        URLxPathController(IXPathsDbAccess xPathDbAccess)
         {
-            _xPathService = xPathService;
+            _xPathDbAccess = xPathDbAccess;
         }
 
 
-        [HttpGet("urls/{url_name}/xpaths")]
-        public JsonResult GetXPaths(string url_name)
+        [HttpGet("urls/{URLId}/xpaths")]
+        public JsonResult GetXPaths(int URLId)
         {
-            return new JsonResult(_xPathService.GetURLxPaths(url_name));
+            return new JsonResult(_xPathDbAccess.GetURLxPaths(URLId));
         }
-        [HttpPost("urls/{url_name}/xpaths/add")]
-        public void AddXPaths(string url_name, string xpath, string property, string atribute)
+        [HttpPost("urls/{URLId}/xpaths/add")]
+        public void AddXPaths(int URLId , string xpath, string property, string atribute)
         {
-            _xPathService.AddURLxPaths(url_name, xpath, property, atribute);
+            _xPathDbAccess.AddURLxPath(URLId, xpath, property, atribute);
         }
-        [HttpDelete("urls/{url_name}/xpaths")]
-        public void GetXPaths(string url_name, int xpathId)
+        [HttpDelete("urls/{URLId}/xpaths")]
+        public void GetXPaths(int URLId, int xpathId)
         {
-            _xPathService.DeleteURLxPaths(url_name, xpathId);
+            _xPathDbAccess.DeleteURLxPath(URLId, xpathId);
         }
 
     }

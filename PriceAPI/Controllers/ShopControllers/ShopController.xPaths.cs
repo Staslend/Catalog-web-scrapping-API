@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DataAccessLayer.DataAccess.XPathDbAccess;
+using Microsoft.AspNetCore.Mvc;
 using PriceAPI.Services_new_.XPathService;
 
 namespace PriceAPI.Controllers.ShopControllers
@@ -8,26 +9,26 @@ namespace PriceAPI.Controllers.ShopControllers
 
     public class ShopxPathsController : ControllerBase
     {
-        IXPathService _xPathService;
-        ShopxPathsController(IXPathService xPathService)
+        IXPathsDbAccess _XPathdDbAccess;
+        ShopxPathsController(IXPathsDbAccess XPathdDbAccess)
         {
-            _xPathService = xPathService;
+            _XPathdDbAccess = XPathdDbAccess;
         }
 
-        [HttpGet("shops/{shop_domain_name}/xpaths")]
-        public JsonResult GetXPaths(string shop_domain_name)
+        [HttpGet("shops/{shopId}/xpaths")]
+        public JsonResult GetXPaths(int shopId)
         {
-            return new JsonResult(_xPathService.GetShopxPaths(shop_domain_name));
+            return new JsonResult(_XPathdDbAccess.GetShopxPaths(shopId));
         }
-        [HttpPost("shops/{shop_domain_name}/xpaths/add")]
-        public void AddXPaths(string shop_domain_name, string xpath, string property, string atribute)
+        [HttpPost("shops/{shopId}/xpaths/add")]
+        public void AddXPaths(int shopId, string xpath, string property, string atribute)
         {
-            _xPathService.AddShopxPaths(shop_domain_name, xpath, property, atribute);
+            _XPathdDbAccess.AddShopxPath(shopId, xpath, property, atribute);
         }
-        [HttpDelete("shops/{shop_domain_name}/xpaths/delete")]
-        public void DeleteAction(string shop_domain_name, int xpathId)
+        [HttpDelete("shops/{shopId}/xpaths/delete")]
+        public void DeleteAction(int shopId, int xpathId)
         {
-            _xPathService.DeleteShopxPaths(shop_domain_name, xpathId);
+            _XPathdDbAccess.DeleteShopxPath(shopId, xpathId);
         }
 
     }

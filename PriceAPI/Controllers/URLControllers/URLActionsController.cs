@@ -1,6 +1,8 @@
-﻿using DatabaseLayer.Models;
+﻿using DataAccessLayer.DataAccess.ActionDbAccess;
+using DatabaseLayer.Models;
 using Microsoft.AspNetCore.Mvc;
 using PriceAPI.Services_new_.ActionService;
+using System;
 
 namespace PriceAPI.Controllers.URLControllers
 {
@@ -8,31 +10,31 @@ namespace PriceAPI.Controllers.URLControllers
     [ApiController]
     public partial class URLActionsController : ControllerBase
     {
-        IActionService _actionService;
+        IActionsDbAccess _actionsDbAccess;
 
-        URLActionsController(IActionService actionService)
+        URLActionsController(IActionsDbAccess actionsDbAccess)
         {
-            _actionService = actionService;
+            _actionsDbAccess = actionsDbAccess;
         }
 
 
-        [HttpGet("urls/{url_name}/actions")]
-        public JsonResult GetActions(string url_name)
+        [HttpGet("urls/{URLId}/actions")]
+        public JsonResult GetActions(int URLId)
         {
 
-            return new JsonResult(_actionService.GetURLActions(url_name));
+            return new JsonResult(_actionsDbAccess.GetURLActions(URLId));
         }
 
-        [HttpPost("urls/{url_name}/actions/add")]
-        public void AddActions(string url_name, ActionName action_name, [ModelBinder] List<string> action_data)
+        [HttpPost("urls/{URLId}/actions/add")]
+        public void AddActions(int URLId, ActionName action_name, [ModelBinder] List<string> action_data)
         {
-            _actionService.AddURLAction(url_name, action_name, action_data);
+            _actionsDbAccess.AddURLAction(URLId, action_name, action_data);
         }
 
-        [HttpDelete("urls/{url_name}/actions/add")]
-        public void DeleteAction(string url_name, int actionId)
+        [HttpDelete("urls/{URLId}/actions/add")]
+        public void DeleteAction(int URLId, int actionId)
         {
-            _actionService.DeleteURLAction(url_name, actionId);
+            _actionsDbAccess.DeleteURLAction(URLId, actionId);
         }
 
     }

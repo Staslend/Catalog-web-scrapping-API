@@ -1,4 +1,5 @@
-﻿using DatabaseLayer.Models;
+﻿using DataAccessLayer.DataAccess.ActionDbAccess;
+using DatabaseLayer.Models;
 using Microsoft.AspNetCore.Mvc;
 using PriceAPI.Services_new_.ActionService;
 
@@ -9,31 +10,31 @@ namespace PriceAPI.Controllers.ShopControllers
 
     public class ShopActionsController : ControllerBase
     {
-        IActionService _actionService;
+        IActionsDbAccess _actionsDbAccess;
 
-        ShopActionsController(IActionService actionService) 
+        ShopActionsController(IActionsDbAccess actionsDbAccess) 
         { 
-            _actionService = actionService;
+            _actionsDbAccess = actionsDbAccess;
         }
 
 
-        [HttpGet("shops/{shop_domain_name}/actions")]
-        public JsonResult GetActions(string shop_domain_name)
+        [HttpGet("shops/{shopId}/actions")]
+        public JsonResult GetActions(int shopId)
         {
-            List<ActionModel> actionsToReturn = _actionService.GetShopActions(shop_domain_name);
+            List<ActionModel> actionsToReturn = _actionsDbAccess.GetShopActions(shopId);
             return new JsonResult(actionsToReturn);
         }
 
-        [HttpPost("shops/{shop_domain_name}/actions/add")]
-        public void AddActions(string shop_domain_name, ActionName action_name, [ModelBinder] List<string> action_data)
+        [HttpPost("shops/{shopId}/actions/add")]
+        public void AddActions(int shopId, ActionName action_name, [ModelBinder] List<string> action_data)
         {
-            _actionService.AddShopAction(shop_domain_name, action_name, action_data);
+            _actionsDbAccess.AddShopAction(shopId, action_name, action_data);
         }
 
-        [HttpDelete("shops/{shop_domain_name}/actions/delete")]
-        public void DeleteAction(string shop_domain_name, int actionId)
+        [HttpDelete("shops/{shopId}/actions/delete")]
+        public void DeleteAction(int shopId, int actionId)
         {
-            _actionService.DeleteShopAction(shop_domain_name, actionId);
+            _actionsDbAccess.DeleteShopAction(shopId, actionId);
         }
 
     }

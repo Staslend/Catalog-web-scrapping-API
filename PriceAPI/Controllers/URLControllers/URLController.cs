@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DataAccessLayer.DataAccess.URLDbAccess;
+using Microsoft.AspNetCore.Mvc;
 using PriceAPI.Services_new_.URLService;
 
 namespace PriceAPI.Controllers.URLControllers
@@ -7,33 +8,33 @@ namespace PriceAPI.Controllers.URLControllers
     [ApiController]
     public class URLController : ControllerBase
     {
-        IURLService _URLService;
+        IURLsDbAccess _URLsDbAccess;
 
-        URLController(IURLService URLService)
+        URLController(IURLsDbAccess URLsDbAccess)
         {
-            _URLService = URLService;
+            _URLsDbAccess = URLsDbAccess;
         }
 
         [HttpGet("urls/")]
         public JsonResult GetURLs()
         {
-            return new JsonResult(_URLService.GetURLs());
+            return new JsonResult(_URLsDbAccess.GetURLs());
         }
 
         [HttpPost("urls/add/")]
-        public void AddURL(string url_name, string url, string shop_domain_name)
+        public void AddURL(string url_name, string url, int shopId)
         {
-            _URLService.AddURL(url_name, url, shop_domain_name);
+            _URLsDbAccess.AddURL(url_name, url, shopId);
         }
-        [HttpDelete("urls/{url_name}/")]
-        public void DeleteURL(string url_name)
+        [HttpDelete("urls/{URLId}/")]
+        public void DeleteURL(int URLId)
         {
-            _URLService.DeleteURL(url_name);
+            _URLsDbAccess.DeleteURL(URLId);
         }
-        [HttpPatch("urls/{url_name}/")]
-        public void ChangeURL(string url_name, string new_url)
+        [HttpPatch("urls/{URLId}/")]
+        public void ChangeURL(int URLId, string newURl)
         {
-            _URLService.ChangeURL(url_name, new_url);
+            _URLsDbAccess.ChangeURL(URLId, newURl);
         }
     }
 }
