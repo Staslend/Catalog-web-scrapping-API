@@ -11,58 +11,57 @@ namespace DataAccessLayer.DataAccess.URLDbAccess
 {
     public class URLsDbAccess : IURLsDbAccess
     {
+
+        ProductAPIDbContext _context;
+
+        URLsDbAccess(ProductAPIDbContext context)
+        {
+            _context = context;
+        }
+
         public void AddURL(string URLName, string URL, int shopId)
         {
-            using (var context = new ProductAPIDbContext())
+            ShopModel? shopToAdd = _context.shops.Find(shopId);
+
+            if (shopToAdd == null)
             {
-                ShopModel? shopToAdd = context.shops.Find(shopId);
-
-                if (shopToAdd == null)
+                shopToAdd = new ShopModel
                 {
-                    shopToAdd = new ShopModel
-                    {
-                        shop_domain_name = ""
-                    };
-                }
-
-                context.URLs.Add(new URLModel
-                {
-                    url = URL,
-                    url_name = URLName,
-                    shop = shopToAdd,
-                    shop_id = shopId
-                });
-
-                context.SaveChanges();
+                    shop_domain_name = ""
+                };
             }
+
+            _context.URLs.Add(new URLModel
+            {
+                url = URL,
+                url_name = URLName,
+                shop = shopToAdd,
+                shop_id = shopId
+            });
+
+            _context.SaveChanges();
+
         }
 
         public void ChangeURL(int URLId, string newURL)
         {
-            using (var context = new ProductAPIDbContext())
-            {
-                URLModel? urlToChange = context.URLs.Include(u => u.actions).Include(u => u.xPaths).FirstOrDefault(u => u.url_id == URLId);
+            URLModel? urlToChange = _context.URLs.Include(u => u.actions).Include(u => u.xPaths).FirstOrDefault(u => u.url_id == URLId);
 
-                if (urlToChange != null)
-                {
-                    urlToChange.url = newURL;
-                    context.Update(urlToChange);
-                }
+            if (urlToChange != null)
+            {
+                urlToChange.url = newURL;
+                _context.Update(urlToChange);
             }
         }
 
         public void DeleteURL(int URLId)
         {
-            using (var context = new ProductAPIDbContext())
+            URLModel? urlToDelete = _context.URLs.Include(u => u.actions).Include(u => u.xPaths).FirstOrDefault(u => u.url_id == URLId);
+
+            if (urlToDelete != null)
             {
-                URLModel? urlToDelete = context.URLs.Include(u => u.actions).Include(u => u.xPaths).FirstOrDefault(u => u.url_id == URLId);
-
-                if(urlToDelete != null)
-                {
-                    context.URLs.Remove(urlToDelete);
-                    context.SaveChanges();
-                }
-
+                _context.URLs.Remove(urlToDelete);
+                _context.SaveChanges();
             }
         }
 
@@ -70,10 +69,7 @@ namespace DataAccessLayer.DataAccess.URLDbAccess
         {
             List<URLModel> returnList;
 
-            using (var context = new ProductAPIDbContext())
-            {
-                returnList = context.URLs.ToList();
-            }
+            returnList = _context.URLs.ToList();
             return returnList;
         }
     }

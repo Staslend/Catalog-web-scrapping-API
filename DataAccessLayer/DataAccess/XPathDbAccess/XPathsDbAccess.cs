@@ -12,6 +12,13 @@ namespace DataAccessLayer.DataAccess.XPathDbAccess
 {
     public class XPathsDbAccess : IXPathsDbAccess
     {
+        ProductAPIDbContext _context;
+
+        XPathsDbAccess(ProductAPIDbContext context)
+        {
+            _context = context;
+        }
+
         public void AddShopxPath(int shopId, string xpath, string property, string atribute)
         {
             XPathModel newXPath = new XPathModel
@@ -21,22 +28,20 @@ namespace DataAccessLayer.DataAccess.XPathDbAccess
                 atribute = atribute
             };
 
-            using (var context = new ProductAPIDbContext())
-            {
-                ShopModel editedShop = context.shops.Where(s => s.shop_id == shopId).Include(s => s.xPaths).First();
+            ShopModel editedShop = _context.shops.Where(s => s.shop_id == shopId).Include(s => s.xPaths).First();
 
-                if (editedShop != null)
+            if (editedShop != null)
+            {
+                if (editedShop.xPaths != null)
                 {
-                    if(editedShop.xPaths != null)
-                    {
-                        editedShop.xPaths.Add(newXPath);
-                    } else
-                    {
-                        editedShop.xPaths = new List<XPathModel> { newXPath };
-                    }
+                    editedShop.xPaths.Add(newXPath);
                 }
-                context.SaveChanges();
+                else
+                {
+                    editedShop.xPaths = new List<XPathModel> { newXPath };
+                }
             }
+            _context.SaveChanges();
         }
 
         public void AddURLxPath(int URLId, string xpath, string property, string atribute)
@@ -48,56 +53,47 @@ namespace DataAccessLayer.DataAccess.XPathDbAccess
                 atribute = atribute
             };
 
-            using (var context = new ProductAPIDbContext())
-            {
-                URLModel editedShop = context.URLs.Where(url => url.url_id == URLId).Include(s => s.xPaths).First();
+            URLModel editedShop = _context.URLs.Where(url => url.url_id == URLId).Include(s => s.xPaths).First();
 
-                if (editedShop != null)
+            if (editedShop != null)
+            {
+                if (editedShop.xPaths != null)
                 {
-                    if (editedShop.xPaths != null)
-                    {
-                        editedShop.xPaths.Add(newXPath);
-                    }
-                    else
-                    {
-                        editedShop.xPaths = new List<XPathModel> { newXPath };
-                    }
+                    editedShop.xPaths.Add(newXPath);
                 }
-                context.SaveChanges();
+                else
+                {
+                    editedShop.xPaths = new List<XPathModel> { newXPath };
+                }
             }
+            _context.SaveChanges();
         }
 
         public void DeleteShopxPath(int shopId, int xPathId)
         {
-            using (var context = new ProductAPIDbContext())
+            ShopModel shop = _context.shops.Include(s => s.xPaths).Where(s => s.shop_id == shopId && s.xPaths != null).First();
+
+            if (shop.xPaths != null)
             {
-                ShopModel shop = context.shops.Include(s => s.xPaths).Where(s => s.shop_id == shopId && s.xPaths != null).First();
+                XPathModel xPath = shop.xPaths.First(xp => xp.xpath_id == xPathId);
 
-                if(shop.xPaths != null)
-                {
-                    XPathModel xPath = shop.xPaths.First(xp => xp.xpath_id == xPathId);
+                shop.xPaths.Remove(xPath);
 
-                    shop.xPaths.Remove(xPath);
-
-                    context.SaveChanges();
-                }
+                _context.SaveChanges();
             }
         }
 
         public void DeleteURLxPath(int URLId, int xPathId)
         {
-            using (var context = new ProductAPIDbContext())
+            URLModel url = _context.URLs.Include(u => u.xPaths).Where(u => u.url_id == URLId && u.xPaths != null).First();
+
+            if (url.xPaths != null)
             {
-                URLModel url = context.URLs.Include(u => u.xPaths).Where(u => u.url_id == URLId && u.xPaths != null).First();
+                XPathModel xPath = url.xPaths.First(xp => xp.xpath_id == xPathId);
 
-                if (url.xPaths != null)
-                {
-                    XPathModel xPath = url.xPaths.First(xp => xp.xpath_id == xPathId);
+                url.xPaths.Remove(xPath);
 
-                    url.xPaths.Remove(xPath);
-
-                    context.SaveChanges();
-                }
+                _context.SaveChanges();
             }
         }
 
@@ -105,16 +101,13 @@ namespace DataAccessLayer.DataAccess.XPathDbAccess
         {
             List<XPathModel> returnList;
 
-            using (var context = new ProductAPIDbContext())
-            {
-                ShopModel shop = context.shops.Include(s => s.xPaths).Where(s => s.shop_id == shopId && s.xPaths != null).First();
+            ShopModel shop = _context.shops.Include(s => s.xPaths).Where(s => s.shop_id == shopId && s.xPaths != null).First();
 
-                if (shop.xPaths != null)
-                {
-                    returnList = shop.xPaths;
-                }
-                else returnList = new List<XPathModel>();
+            if (shop.xPaths != null)
+            {
+                returnList = shop.xPaths;
             }
+            else returnList = new List<XPathModel>();
             return returnList;
         }
 
@@ -122,15 +115,13 @@ namespace DataAccessLayer.DataAccess.XPathDbAccess
         {
             List<XPathModel> returnList;
 
-            using (var context = new ProductAPIDbContext())
-            {
-                URLModel url = context.URLs.Include(u => u.xPaths).Where(u => u.url_id == URLId && u.xPaths != null).First();
+            URLModel url = _context.URLs.Include(u => u.xPaths).Where(u => u.url_id == URLId && u.xPaths != null).First();
 
-                if(url.xPaths != null)
-                {
-                    returnList = url.xPaths;
-                } else returnList = new List<XPathModel>();
+            if (url.xPaths != null)
+            {
+                returnList = url.xPaths;
             }
+            else returnList = new List<XPathModel>();
             return returnList;
         }
     }

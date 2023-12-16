@@ -11,30 +11,32 @@ namespace DataAccessLayer.DataAccess.ShopDbAccess
 {
     internal class ShopsDbAccess : IShopsDbAccess
     {
+
+        ProductAPIDbContext _context;
+
+        ShopsDbAccess(ProductAPIDbContext context)
+        {
+            _context = context;
+        }
+
         public void AddShop(string shopName, string shopDomainName)
         {
-            using (var context = new ProductAPIDbContext())
+            _context.shops.Add(new ShopModel
             {
-                context.shops.Add(new ShopModel
-                {
-                    shop_name = shopName,  
-                    shop_domain_name = shopDomainName
-                });
-                context.SaveChanges();
-            }
+                shop_name = shopName,
+                shop_domain_name = shopDomainName
+            });
+            _context.SaveChanges();
         }
 
         public void DeleteShop(int shopId)
         {
-            using (var context = new ProductAPIDbContext())
-            {
-                ShopModel? shopToDelete = context.shops.Include(s => s.actions).Include(u => u.xPaths).FirstOrDefault(u => u.shop_id == shopId);
+            ShopModel? shopToDelete = _context.shops.Include(s => s.actions).Include(u => u.xPaths).FirstOrDefault(u => u.shop_id == shopId);
 
-                if (shopToDelete != null)
-                {
-                    context.shops.Remove(shopToDelete);
-                    context.SaveChanges();
-                }
+            if (shopToDelete != null)
+            {
+                _context.shops.Remove(shopToDelete);
+                _context.SaveChanges();
             }
         }
 
@@ -42,10 +44,7 @@ namespace DataAccessLayer.DataAccess.ShopDbAccess
         {
             List<ShopModel> returnList;
 
-            using (var context = new ProductAPIDbContext())
-            {
-                returnList = context.shops.ToList();
-            }
+            returnList = _context.shops.ToList();
             return returnList;
         }
     }
