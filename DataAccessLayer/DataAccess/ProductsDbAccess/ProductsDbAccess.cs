@@ -2,6 +2,7 @@
 using DatabaseLayer.DataContexts;
 using DatabaseLayer.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,18 +13,26 @@ using System.Threading.Tasks;
 namespace DataAccessLayer.DataAccess.ProductsDbAccess
 {
 
+    public class ProductQueryData
+    {
+        public int page = 0;
+        public int pageSize = 0;
+
+        public string keyWord = string.Empty;
+        public string order = string.Empty;
+        public Dictionary<string, string> textDataFilter = new();
+        public Dictionary<string, double> numericDataFilter = new();
+
+    }
 
     public class ProductsDbAccess : IProductsDbAccess
     {
         ProductAPIDbContext _context;
 
-        const int PAGE_SIZE = 100;
-
-        ProductsDbAccess(ProductAPIDbContext productAPIDbContext)
+        public ProductsDbAccess(ProductAPIDbContext productAPIDbContext)
         {
             _context = productAPIDbContext;
         }
-
 
         public void AddDbProductData(List<ProductModel> products)
         {
@@ -50,20 +59,18 @@ namespace DataAccessLayer.DataAccess.ProductsDbAccess
             return product;
         }
 
-        public List<ProductModel> GetProducts(int? page, string orderby = "")
+        public List<ProductModel> GetProducts(ProductQueryData productQueryData)
         {
-            List<ProductModel> returnProductList = new();
+            IQueryable<ProductModel> returnProducQuery = _context.products;
 
+
+            /*
             if (orderby == string.Empty)
             {
-                if (page is null)
-                {
-                    returnProductList = _context.products.ToList();
-                }
-                else returnProductList = _context.products.Skip(page.Value * PAGE_SIZE).Take(PAGE_SIZE).ToList();
             }
             else
             {
+
                 var queryWithListOfRequestedProducts = from product in _context.products
                                                        join productTextData in _context.productsTextData
                                                        on new { id = product.product_id, order = @orderby } equals
@@ -72,19 +79,20 @@ namespace DataAccessLayer.DataAccess.ProductsDbAccess
                                                        orderby x.property_value
                                                        select new ProductModel { product_id = x.product_id };
 
+                List<ProductModel> pm = queryWithListOfRequestedProducts.ToList();
                 if (page is null)
                 {
 
-                    var queryWithFinalList = (from objA in _context.products
-                                              join objB in queryWithListOfRequestedProducts on objA.product_id equals objB.product_id
+                    var queryWithFinalList = (from objA in queryWithListOfRequestedProducts
+                                              join objB in _context.products on objA.product_id equals objB.product_id
                                               select objA);
 
                     returnProductList = queryWithFinalList.ToList();
                 }
                 else
                 {
-                    var queryWithFinalList = (from objA in _context.products
-                                              join objB in queryWithListOfRequestedProducts on objA.product_id equals objB.product_id
+                    var queryWithFinalList = (from objA in queryWithListOfRequestedProducts
+                                              join objB in _context.products on objA.product_id equals objB.product_id
                                               select objA).Skip(page.Value * PAGE_SIZE).Take(PAGE_SIZE);
 
                     returnProductList = queryWithFinalList.ToList();
@@ -92,7 +100,78 @@ namespace DataAccessLayer.DataAccess.ProductsDbAccess
                 }
 
             }
-            return returnProductList;
+            */
+            //Filtering
+            IQueryable<int> productIdsFilteredByTextFilters = null;
+            IQueryable<int> productIdsFilteredByNumericFilters = null;
+
+            var testList1 = returnProducQuery.ToList();
+
+
+            if (_context.productsTextData is not null && productQueryData.textDataFilter is not null)
+            {
+                productIdsFilteredByTextFilters = _context.productsTextData.Select(p =>
+                new
+                {
+                    id = p.product_id,
+                    keyPair = new KeyValuePair<string, string>(p.product_property_name, p.property_value)
+                }
+                ).Where(p => productQueryData.textDataFilter.Contains(p.keyPair)).GroupBy(p => p.id).Select(p => new
+                {
+                    id = p.Key,
+                    count = p.Count()
+                }).Where(p => p.count >= productQueryData.textDataFilter.Count).Select(p => p.id);
+            }
+            if (_context.productsNumericData is not null && productQueryData.numericDataFilter is not null)
+            {
+                productIdsFilteredByNumericFilters = _context.productsNumericData.Select(p =>
+                new
+                {
+                    id = p.product_id,
+                    keyPair = new KeyValuePair<string, double>(p.product_property_name, p.property_value)
+                }
+                ).Where(p => productQueryData.numericDataFilter.Contains(p.keyPair)).GroupBy(p => p.id).Select(p => new
+                {
+                    id = p.Key,
+                    count = p.Count()
+                }).Where(p => p.count >= productQueryData.textDataFilter.Count).Select(p => p.id);
+            }
+
+            var testList2 = returnProducQuery.ToList();
+
+            if(productIdsFilteredByNumericFilters is not null && productIdsFilteredByTextFilters is not null)
+            {
+                returnProducQuery = returnProducQuery.Select(p => p).Where(p => productIdsFilteredByNumericFilters.Intersect(productIdsFilteredByTextFilters).Contains(p.product_id));
+            } else if (productIdsFilteredByNumericFilters is null && productIdsFilteredByTextFilters is not null)
+            {
+                returnProducQuery = returnProducQuery.Select(p => p).Where(p => productIdsFilteredByTextFilters.Contains(p.product_id));
+            } else if (productIdsFilteredByNumericFilters is not null && productIdsFilteredByTextFilters is null)
+            {
+                returnProducQuery = returnProducQuery.Select(p => p).Where(p => productIdsFilteredByNumericFilters.Contains(p.product_id));
+            }
+
+            //Ordering
+            if (!string.IsNullOrEmpty(productQueryData.order))
+            {
+
+
+
+                returnProducQuery = from product in returnProducQuery
+                                    join productTextData in _context.productsTextData
+                                    on new { id = product.product_id, @productQueryData.order } equals
+                                       new { id = productTextData.product_id, order = productTextData.product_property_name } into grouping
+                                    from x in grouping.DefaultIfEmpty()
+                                    orderby x.property_value
+                                    select new ProductModel { product_id = x.product_id };
+            }
+
+            //Paggination
+            if (productQueryData.page != 0 && productQueryData.pageSize != 0)
+            {
+                returnProducQuery.Skip(productQueryData.page * productQueryData.pageSize).Take(productQueryData.pageSize).ToList();
+            }
+
+            return returnProducQuery.ToList();
 
         }
     }

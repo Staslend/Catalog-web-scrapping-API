@@ -1,5 +1,8 @@
 
+using DataAccessLayer.DataAccess.ProductsDbAccess;
+using DataAccessLayer.DataAccess.URLDbAccess;
 using DatabaseLayer.DataContexts;
+using Microsoft.EntityFrameworkCore;
 using PriceAPI.Services.ProductService;
 
 using WebScrapperLayer.WebScrapperDataProvider;
@@ -18,11 +21,19 @@ namespace PriceAPI
 
             builder.Services.AddControllers();
 
-            builder.Services.AddDbContext<ProductAPIDbContext>();
+            builder.Services.AddDbContext<ProductAPIDbContext>(options =>
+            {
+                options.UseSqlServer(builder.Configuration.GetConnectionString("TestDbConnection"));
+            });
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            builder.Services.AddScoped<IProductsDbAccess, ProductsDbAccess>();
+            builder.Services.AddScoped<IURLsDbAccess, URLsDbAccess>();
+
+
 
             builder.Services.AddScoped<IProductService, ProductService>();
 

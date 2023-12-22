@@ -1,6 +1,7 @@
 ﻿using DataAccessLayer.DataAccess.ProductsDbAccess;
 using DataAccessLayer.DataAccess.URLDbAccess;
 using DatabaseLayer.Models;
+using PriceAPI.Controllers;
 using WebScrapperLayer.WebScrapperDataProvider;
 
 namespace PriceAPI.Services.ProductService
@@ -13,16 +14,21 @@ namespace PriceAPI.Services.ProductService
         IWebScrapperDataProvider _webScrapperDataProvider;
 
 
-        ProductService(IProductsDbAccess productsDbAccess, IURLsDbAccess URLsDbAccess, IWebScrapperDataProvider webScrapperDataProvider)
+        public ProductService(IProductsDbAccess productsDbAccess, IURLsDbAccess URLsDbAccess, IWebScrapperDataProvider webScrapperDataProvider)
         {
             _productsDbAccess = productsDbAccess;
             _URLsDataAccess = URLsDbAccess;
             _webScrapperDataProvider = webScrapperDataProvider;
         }
 
-        public List<ProductModel> GetProducts(int? page, string orderby = "product_id")
+        public ProductModel GetProduct(int productId)
         {
-            return _productsDbAccess.GetProducts(page, orderby);
+            return _productsDbAccess.GetProduct(productId);
+        }
+
+        public List<ProductModel> GetProducts(ProductQueryData productQueryData)
+        {
+            return _productsDbAccess.GetProducts(productQueryData);
         }
 
         public void UpdateProducts()
@@ -39,8 +45,6 @@ namespace PriceAPI.Services.ProductService
                         url.shop is null ? url.actions : url.shop.actions,
                         url.url)
                 );
-
-
         }
     }
 }

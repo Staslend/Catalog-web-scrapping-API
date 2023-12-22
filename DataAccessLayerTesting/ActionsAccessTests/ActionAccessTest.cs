@@ -10,71 +10,150 @@ namespace DataAccessLayerTesting.ActionsAccessTests
 {
     public class ActionAccessTest
     {
-        ActionAccessTest() { }
-
-        private static DbSet<T> GetQueryableMockDbSet<T>(List<T> sourceList) where T : class
-        {
-            var queryable = sourceList.AsQueryable();
-
-            var dbSet = new Mock<DbSet<T>>();
-            dbSet.As<IQueryable<T>>().Setup(m => m.Provider).Returns(queryable.Provider);
-            dbSet.As<IQueryable<T>>().Setup(m => m.Expression).Returns(queryable.Expression);
-            dbSet.As<IQueryable<T>>().Setup(m => m.ElementType).Returns(queryable.ElementType);
-            dbSet.As<IQueryable<T>>().Setup(m => m.GetEnumerator()).Returns(() => queryable.GetEnumerator());
-            dbSet.Setup(d => d.Add(It.IsAny<T>())).Callback<T>((s) => sourceList.Add(s));
-
-            return dbSet.Object;
-        }
-
         [Fact]
         public void GetURLActions_IdOfExistedURL_ListOfActions()
         {
             //Arrange
 
-            ProductAPIDbContext dbContextMock = new ProductAPIDbContext();
 
-            IActionsDbAccess actionsDbAccess = new ActionsDbAccess(dbContextMock);
-
-
-            var moqSet = GetQueryableMockDbSet<URLModel>(new List<URLModel>
+            var actionsData = new List<ActionModel>
             {
-                new URLModel
+                new ActionModel
                 {
-                    actions = new List<ActionModel>
+                    action_name = ActionName.Merge,
+                    action_data = new List<ActionDataModel>
                     {
-                        new ActionModel
+                        new ActionDataModel
                         {
-                            action_id = 1,
-                            action_data = {new ActionDataModel()},
-                            action_name = ActionName.Cut
-                        },
-                        new ActionModel
+                            action_data = "action1Data",
+                            action_data_id = 1,
+                        }
+                    }
+                },
+                new ActionModel
+                {
+                    action_name = ActionName.Cut,
+                    action_data = new List<ActionDataModel>
+                    {
+                        new ActionDataModel
                         {
-                            action_id = 2,
-                            action_data = {new ActionDataModel()},
-                            action_name = ActionName.Merge
-                        },
-                        new ActionModel
-                        {
-                            action_id = 3,
-                            action_data = {new ActionDataModel()},
-                            action_name = ActionName.ConvertToNumeric
-                        },
-
+                            action_data = "action2Data",
+                            action_data_id = 2,
+                        }
                     }
                 }
-            });
-
-            var dbContextMoq = new Mock<ProductAPIDbContext>();
-            dbContextMoq.Setup(x => x.Set<URLModel>()).Returns(moqSet);
+            };
 
 
+            var URLData = new List<URLModel>
+            {
+               new URLModel
+               {
+                    actions = actionsData,
+                    url_id = 1,
+
+               }
+            }.AsQueryable();
+
+            var URLMock = new Mock<DbSet<URLModel>>();
+                        
+            URLMock.As<IQueryable<URLModel>>().SetupGet(m => m.Provider).Returns(URLData.Provider);
+            URLMock.As<IQueryable<URLModel>>().SetupGet(m => m.Expression).Returns(URLData.Expression);
+            URLMock.As<IQueryable<URLModel>>().SetupGet(m => m.ElementType).Returns(URLData.ElementType);
+            URLMock.As<IQueryable<URLModel>>().Setup(m => m.GetEnumerator()).Returns(URLData.GetEnumerator());
+
+            var dbContextMock = new Mock<ProductAPIDbContext>();
+
+            dbContextMock.SetupGet(c => c.URLs).Returns(URLMock.Object);
+
+
+            IActionsDbAccess actionsDbAccess = new ActionsDbAccess(dbContextMock.Object);
 
             //Act
 
-            List<ActionModel> actions = dbContextMoq.URLs.ToList();
+            List<ActionModel> actions = actionsDbAccess.GetURLActions(1);
 
             //Assert
+        
+            Assert.Equal(2, actions.Count);
+            Assert.Equal("action1Data", actions[0].action_data[0].action_data);
+            Assert.Equal("action2Data", actions[1].action_data[0].action_data);
+
+
         }
+
+        [Fact]
+        public void GetShopActions_IdOfExistedShop_ListOfActions()
+        {
+            //Arrange
+
+
+            var actionsData = new List<ActionModel>
+            {
+                new ActionModel
+                {
+                    action_name = ActionName.Merge,
+                    action_data = new List<ActionDataModel>
+                    {
+                        new ActionDataModel
+                        {
+                            action_data = "action1Data",
+                            action_data_id = 1,
+                        }
+                    }
+                },
+                new ActionModel
+                {
+                    action_name = ActionName.Cut,
+                    action_data = new List<ActionDataModel>
+                    {
+                        new ActionDataModel
+                        {
+                            action_data = "action2Data",
+                            action_data_id = 2,
+                        }
+                    }
+                }
+            };
+
+
+            var ShopData = new List<ShopModel>
+            {
+               new ShopModel
+               {
+                    actions = actionsData,
+                    shop_id = 2,
+
+               }
+            }.AsQueryable();
+
+            var ShopsMock = new Mock<DbSet<ShopModel>>();
+
+            ShopsMock.As<IQueryable<ShopModel>>().SetupGet(m => m.Provider).Returns(ShopData.Provider);
+            ShopsMock.As<IQueryable<ShopModel>>().SetupGet(m => m.Expression).Returns(ShopData.Expression);
+            ShopsMock.As<IQueryable<ShopModel>>().SetupGet(m => m.ElementType).Returns(ShopData.ElementType);
+            ShopsMock.As<IQueryable<ShopModel>>().Setup(m => m.GetEnumerator()).Returns(ShopData.GetEnumerator());
+
+            var dbContextMock = new Mock<ProductAPIDbContext>();
+
+            dbContextMock.SetupGet(c => c.shops).Returns(ShopsMock.Object);
+
+
+            IActionsDbAccess actionsDbAccess = new ActionsDbAccess(dbContextMock.Object);
+
+            //Act
+
+            List<ActionModel> actions = actionsDbAccess.GetShopActions(2);
+
+            //Assert
+
+            Assert.Equal(2, actions.Count);
+            Assert.Equal("action1Data", actions[0].action_data[0].action_data);
+            Assert.Equal("action2Data", actions[1].action_data[0].action_data);
+
+
+        }
+    
+    
     }
 }

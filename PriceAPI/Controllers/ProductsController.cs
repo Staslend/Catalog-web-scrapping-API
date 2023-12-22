@@ -4,6 +4,8 @@ using PriceAPI.Services.ProductService;
 
 namespace PriceAPI.Controllers
 {
+
+
     [Route("api/")]
     [ApiController]
     public class ProductsController : ControllerBase
@@ -15,16 +17,23 @@ namespace PriceAPI.Controllers
             _productService = productService;
         }
 
-        [HttpGet("products/")]
-        public async Task<JsonResult> Products(int? page, string orderby ="")
+
+        [HttpGet("products/{id}")]
+        public async Task<JsonResult> Products(int id)
         {
-            return new JsonResult(_productService.GetProducts(page));
+            return new JsonResult(_productService.GetProduct(id));
+        }
+
+        [HttpGet("products/")]
+        public async Task<JsonResult> Products(ProductQueryData productQueryData)
+        {
+            return new JsonResult(_productService.GetProducts(productQueryData));
         }
 
         //TODO: Bad responce 
         [HttpPatch("products/")]
         public async Task<IActionResult> Update()
-        {   
+        {
             _productService.UpdateProducts();
             return Ok("Updade started");
         }

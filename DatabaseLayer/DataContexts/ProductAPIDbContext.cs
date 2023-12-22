@@ -1,5 +1,6 @@
 ﻿using DatabaseLayer.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,16 +11,19 @@ namespace DatabaseLayer.DataContexts
 {
     public class ProductAPIDbContext : DbContext
     {
-        public DbSet<ProductModel> products { get; set; }
-        public DbSet<ProductNumericDataModel> productsNumericData { get; set; }
-        public DbSet<ProductTextDataModel> productsTextData { get; set; }
+        public virtual DbSet<ProductModel> products { get; set; }
+        public virtual DbSet<ProductNumericDataModel> productsNumericData { get; set; }
+        public virtual DbSet<ProductTextDataModel> productsTextData { get; set; }
 
-        public DbSet<ShopModel> shops { get; set; }
-        public DbSet<URLModel> URLs { get; set; }
+        public virtual DbSet<ShopModel> shops { get; set; }
+        public virtual DbSet<URLModel> URLs { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+
+        public ProductAPIDbContext() { }
+
+        public ProductAPIDbContext(DbContextOptions options) : base(options)
         {
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=ProductAPIDb");
+        
         }
     }
 }

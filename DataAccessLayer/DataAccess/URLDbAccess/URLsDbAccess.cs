@@ -14,7 +14,7 @@ namespace DataAccessLayer.DataAccess.URLDbAccess
 
         ProductAPIDbContext _context;
 
-        URLsDbAccess(ProductAPIDbContext context)
+        public URLsDbAccess(ProductAPIDbContext context)
         {
             _context = context;
         }
