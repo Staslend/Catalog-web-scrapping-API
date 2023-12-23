@@ -10,7 +10,7 @@ namespace WebScrapperTesting.Tests
     public class WebScrapperTest
     {
         [Fact]
-        public void GetRawWebScrapperData_TestURLAndTestxPath_AmountOfElementsWithSpecificClass()
+        public async void GetRawWebScrapperData_TestURLAndTestxPath_AmountOfElementsWithSpecificClass()
         {
             //Arrange
             WebScrapper webScrapper = new WebScrapper();
@@ -18,7 +18,7 @@ namespace WebScrapperTesting.Tests
             List<string> rawData = new();
             //Act
 
-            rawData = webScrapper.GetRawWebScrapperData("//h3[@class='fs-5']", "https://phptravels.com/demo/","");
+            rawData = await webScrapper.GetRawWebScrapperData("//h3[@class='fs-5']", "https://phptravels.com/demo/","");
 
             //Assert
             Assert.Equal(6, rawData.Count());

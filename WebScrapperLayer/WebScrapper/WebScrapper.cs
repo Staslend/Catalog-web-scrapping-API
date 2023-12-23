@@ -12,25 +12,49 @@ namespace WebScrapperLayer.WebScrapper
         HtmlWeb _htmlWeb;
         HtmlDocument _htmlDocument;
 
-        string previousUrl = String.Empty;
+        string _previousUrl = String.Empty;
+
+        HtmlNodeCollection _previousNamenodes = null;
+        HtmlNodeCollection _namenodes = null;
 
         public WebScrapper() {
             _htmlWeb = new HtmlWeb();
             _htmlDocument = new HtmlDocument();
         }
 
-        public List<string> GetRawWebScrapperData(string xPath, string url, string atribute)
+        private bool NodeCollectionsAreIdentical(HtmlNodeCollection nc1, HtmlNodeCollection nc2)
         {
-            if(previousUrl != url)  _htmlDocument = _htmlWeb.Load(url);
-
-            HtmlNodeCollection namenodes = _htmlDocument.DocumentNode.SelectNodes(xPath);
-
-            if(atribute == String.Empty)
+            if (nc1.Count == nc2.Count)
             {
-                return namenodes.Select(n => n.InnerText).ToList();
+                for (int i = 0; i < nc1.Count; i++)
+                {
+                    if (nc1[i].InnerText != nc2[i].InnerText) return false;
+                }
+                return true;
+            }
+            return false;
+
+        }
+
+        public async Task<List<string>> GetRawWebScrapperData(string xPath, string url, string atribute)
+        {
+            if(_previousUrl != url)  _htmlDocument = await _htmlWeb.LoadFromWebAsync(url);
+
+            _previousNamenodes = _namenodes;
+            _namenodes = _htmlDocument.DocumentNode.SelectNodes(xPath);
+
+            //Check if the same data was loaded like in previous request
+            if(_previousNamenodes is not null && _namenodes is not null)
+            {
+                if (NodeCollectionsAreIdentical(_previousNamenodes, _namenodes)) return null;
+            }
+
+            if (atribute == String.Empty)
+            {
+                return _namenodes.Select(n => n.InnerText).ToList();
 
             }
-            return namenodes.Select(n => n.Attributes[atribute].Value).ToList();
+            return _namenodes.Select(n => n.Attributes[atribute].Value).ToList();
         }
 
     }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DataAccessLayer.DataAccess.ProductsDbAccess;
+using Microsoft.AspNetCore.Mvc;
 using PriceAPI.Services.ProductService;
 using PriceAPI.Services.ProductService;
 

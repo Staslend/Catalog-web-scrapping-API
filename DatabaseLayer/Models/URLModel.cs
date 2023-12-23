@@ -15,6 +15,8 @@ namespace DatabaseLayer.Models
 
         public string url_name { get; set; } = string.Empty;
 
+        public bool multipaged { get; set; } = false;
+
         //Reference to URL specific actions and xPaths
         public List<ActionModel>? actions { get; set; }
 

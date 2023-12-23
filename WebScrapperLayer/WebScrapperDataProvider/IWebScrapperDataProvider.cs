@@ -9,7 +9,7 @@ namespace WebScrapperLayer.WebScrapperDataProvider
 {
     public interface IWebScrapperDataProvider
     {
-        public List<ProductModel> GetProductsData(List<XPathModel> xPaths, List<ActionModel> actions, string url);
+        public Task<List<ProductModel>> GetProductsData(List<XPathModel> xPaths, List<ActionModel> actions, string url);
 
     }
 }

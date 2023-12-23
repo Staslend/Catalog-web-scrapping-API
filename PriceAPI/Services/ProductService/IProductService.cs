@@ -1,4 +1,5 @@
-﻿using DatabaseLayer.Models;
+﻿using DataAccessLayer.DataAccess.ProductsDbAccess;
+using DatabaseLayer.Models;
 using PriceAPI.Controllers;
 
 namespace PriceAPI.Services.ProductService

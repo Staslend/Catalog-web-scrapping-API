@@ -8,7 +8,7 @@ namespace WebScrapperLayer.WebScrapper
 {
     internal interface IWebScrapper
     {
-        public List<string> GetRawWebScrapperData(string xPath, string url, string atribute = "");
+        public Task<List<string>> GetRawWebScrapperData(string xPath, string url, string atribute = "");
 
     }
 }
