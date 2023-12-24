@@ -49,12 +49,17 @@ namespace WebScrapperLayer.WebScrapper
                 if (NodeCollectionsAreIdentical(_previousNamenodes, _namenodes)) return null;
             }
 
-            if (atribute == String.Empty)
+            if (_namenodes is not null)
             {
-                return _namenodes.Select(n => n.InnerText).ToList();
+                if (atribute == String.Empty)
+                {
+                    return _namenodes.Select(n => n.InnerText).ToList();
+
+                }
+                return _namenodes.Select(n => n.Attributes[atribute].Value).ToList();
 
             }
-            return _namenodes.Select(n => n.Attributes[atribute].Value).ToList();
+            else return new List<string>();
         }
 
     }

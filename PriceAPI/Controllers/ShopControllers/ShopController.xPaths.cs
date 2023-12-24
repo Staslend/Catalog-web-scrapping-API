@@ -5,11 +5,10 @@ namespace PriceAPI.Controllers.ShopControllers
 {
     [Route("api/")]
     [ApiController]
-
     public class ShopxPathsController : ControllerBase
     {
         IXPathsDbAccess _XPathdDbAccess;
-        ShopxPathsController(IXPathsDbAccess XPathdDbAccess)
+        public ShopxPathsController(IXPathsDbAccess XPathdDbAccess)
         {
             _XPathdDbAccess = XPathdDbAccess;
         }
@@ -20,7 +19,7 @@ namespace PriceAPI.Controllers.ShopControllers
             return new JsonResult(_XPathdDbAccess.GetShopxPaths(shopId));
         }
         [HttpPost("shops/{shopId}/xpaths/add")]
-        public void AddXPaths(int shopId, string xpath, string property, string atribute)
+        public void AddXPaths(int shopId, string xpath, string property, string atribute = "")
         {
             _XPathdDbAccess.AddShopxPath(shopId, xpath, property, atribute);
         }

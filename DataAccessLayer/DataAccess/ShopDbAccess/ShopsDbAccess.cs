@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer.DataAccess.ShopDbAccess
 {
-    internal class ShopsDbAccess : IShopsDbAccess
+    public class ShopsDbAccess : IShopsDbAccess
     {
 
         ProductAPIDbContext _context;
 
-        ShopsDbAccess(ProductAPIDbContext context)
+        public ShopsDbAccess(ProductAPIDbContext context)
         {
             _context = context;
         }

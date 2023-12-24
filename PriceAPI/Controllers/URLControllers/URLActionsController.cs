@@ -11,7 +11,7 @@ namespace PriceAPI.Controllers.URLControllers
     {
         IActionsDbAccess _actionsDbAccess;
 
-        URLActionsController(IActionsDbAccess actionsDbAccess)
+        public URLActionsController(IActionsDbAccess actionsDbAccess)
         {
             _actionsDbAccess = actionsDbAccess;
         }

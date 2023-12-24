@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 namespace DataAccessLayer.DataAccess.XPathDbAccess
 {
@@ -14,12 +15,12 @@ namespace DataAccessLayer.DataAccess.XPathDbAccess
     {
         ProductAPIDbContext _context;
 
-        XPathsDbAccess(ProductAPIDbContext context)
+        public XPathsDbAccess(ProductAPIDbContext context)
         {
             _context = context;
         }
 
-        public void AddShopxPath(int shopId, string xpath, string property, string atribute)
+        public async void AddShopxPath(int shopId, string xpath, string property, string atribute)
         {
             XPathModel newXPath = new XPathModel
             {
@@ -28,7 +29,7 @@ namespace DataAccessLayer.DataAccess.XPathDbAccess
                 atribute = atribute
             };
 
-            ShopModel editedShop = _context.shops.Where(s => s.shop_id == shopId).Include(s => s.xPaths).First();
+            ShopModel editedShop = await _context.shops.Where(s => s.shop_id == shopId).Include(s => s.xPaths).FirstAsync();
 
             if (editedShop != null)
             {
@@ -41,10 +42,10 @@ namespace DataAccessLayer.DataAccess.XPathDbAccess
                     editedShop.xPaths = new List<XPathModel> { newXPath };
                 }
             }
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        public void AddURLxPath(int URLId, string xpath, string property, string atribute)
+        public async void AddURLxPath(int URLId, string xpath, string property, string atribute)
         {
             XPathModel newXPath = new XPathModel
             {
@@ -53,7 +54,7 @@ namespace DataAccessLayer.DataAccess.XPathDbAccess
                 atribute = atribute
             };
 
-            URLModel editedShop = _context.URLs.Where(url => url.url_id == URLId).Include(s => s.xPaths).First();
+            URLModel editedShop = await _context.URLs.Where(url => url.url_id == URLId).Include(s => s.xPaths).FirstAsync();
 
             if (editedShop != null)
             {
@@ -66,12 +67,12 @@ namespace DataAccessLayer.DataAccess.XPathDbAccess
                     editedShop.xPaths = new List<XPathModel> { newXPath };
                 }
             }
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        public void DeleteShopxPath(int shopId, int xPathId)
+        public async void DeleteShopxPath(int shopId, int xPathId)
         {
-            ShopModel shop = _context.shops.Include(s => s.xPaths).Where(s => s.shop_id == shopId && s.xPaths != null).First();
+            ShopModel shop = await _context.shops.Include(s => s.xPaths).Where(s => s.shop_id == shopId && s.xPaths != null).FirstAsync();
 
             if (shop.xPaths != null)
             {
@@ -79,13 +80,13 @@ namespace DataAccessLayer.DataAccess.XPathDbAccess
 
                 shop.xPaths.Remove(xPath);
 
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
         }
 
-        public void DeleteURLxPath(int URLId, int xPathId)
+        public async void DeleteURLxPath(int URLId, int xPathId)
         {
-            URLModel url = _context.URLs.Include(u => u.xPaths).Where(u => u.url_id == URLId && u.xPaths != null).First();
+            URLModel url = await _context.URLs.Include(u => u.xPaths).Where(u => u.url_id == URLId && u.xPaths != null).FirstAsync();
 
             if (url.xPaths != null)
             {
@@ -93,15 +94,15 @@ namespace DataAccessLayer.DataAccess.XPathDbAccess
 
                 url.xPaths.Remove(xPath);
 
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
         }
 
-        public List<XPathModel> GetShopxPaths(int shopId)
+        public async Task<List<XPathModel>> GetShopxPaths(int shopId)
         {
             List<XPathModel> returnList;
 
-            ShopModel shop = _context.shops.Include(s => s.xPaths).Where(s => s.shop_id == shopId && s.xPaths != null).First();
+            ShopModel shop = await _context.shops.Include(s => s.xPaths).Where(s => s.shop_id == shopId && s.xPaths != null).FirstAsync();
 
             if (shop.xPaths != null)
             {
@@ -111,11 +112,11 @@ namespace DataAccessLayer.DataAccess.XPathDbAccess
             return returnList;
         }
 
-        public List<XPathModel> GetURLxPaths(int URLId)
+        public async Task<List<XPathModel>> GetURLxPaths(int URLId)
         {
             List<XPathModel> returnList;
 
-            URLModel url = _context.URLs.Include(u => u.xPaths).Where(u => u.url_id == URLId && u.xPaths != null).First();
+            URLModel url = await _context.URLs.Include(u => u.xPaths).Where(u => u.url_id == URLId && u.xPaths != null).FirstAsync();
 
             if (url.xPaths != null)
             {
@@ -123,6 +124,52 @@ namespace DataAccessLayer.DataAccess.XPathDbAccess
             }
             else returnList = new List<XPathModel>();
             return returnList;
+        }
+
+        public async void UpdateShopxPath(int shopId, int xpathId, string newXPath = "", string newProperty = "", string newAtribute = "")
+        {
+            ShopModel shop = await _context.shops.Include(s => s.xPaths).Where(s => s.shop_id == shopId && s.xPaths != null).FirstAsync();
+
+            XPathModel xPathToEdit = await shop.xPaths.Where(xPath => xPath.xpath_id == xpathId).AsQueryable().FirstAsync();
+
+            if (newXPath.IsNullOrEmpty())
+            {
+                xPathToEdit.xpath = newXPath; 
+            }
+
+            if(newProperty.IsNullOrEmpty())
+            {
+                xPathToEdit.property_name = newXPath;
+            }
+
+            if(newAtribute.IsNullOrEmpty())
+            {
+                xPathToEdit.atribute = newAtribute;
+            }
+
+            await _context.SaveChangesAsync();
+        }
+        public async void UpdateURLxPath(int URLId, int xpathId, string newXPath = "", string newProperty = "", string newAtribute = "")
+        {
+            URLModel url = await _context.URLs.Include(u => u.xPaths).Where(u => u.url_id == URLId && u.xPaths != null).FirstAsync();
+
+            XPathModel xPathToEdit = await url.xPaths.Where(xPath => xPath.xpath_id == xpathId).AsQueryable().FirstAsync();
+
+            if (newXPath.IsNullOrEmpty())
+            {
+                xPathToEdit.xpath = newXPath;
+            }
+
+            if (newProperty.IsNullOrEmpty())
+            {
+                xPathToEdit.property_name = newXPath;
+            }
+
+            if (newAtribute.IsNullOrEmpty())
+            {
+                xPathToEdit.atribute = newAtribute;
+            }
+            await _context.SaveChangesAsync();
         }
     }
 }

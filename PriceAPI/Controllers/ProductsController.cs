@@ -26,7 +26,7 @@ namespace PriceAPI.Controllers
         }
 
         [HttpGet("products/")]
-        public async Task<JsonResult> Products(ProductQueryData productQueryData)
+        public async Task<JsonResult> Products([FromQuery] ProductQueryData productQueryData)
         {
             return new JsonResult(_productService.GetProducts(productQueryData));
         }

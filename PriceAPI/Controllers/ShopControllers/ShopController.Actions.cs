@@ -6,12 +6,11 @@ namespace PriceAPI.Controllers.ShopControllers
 {
     [Route("api/")]
     [ApiController]
-
     public class ShopActionsController : ControllerBase
     {
         IActionsDbAccess _actionsDbAccess;
 
-        ShopActionsController(IActionsDbAccess actionsDbAccess) 
+        public ShopActionsController(IActionsDbAccess actionsDbAccess) 
         { 
             _actionsDbAccess = actionsDbAccess;
         }

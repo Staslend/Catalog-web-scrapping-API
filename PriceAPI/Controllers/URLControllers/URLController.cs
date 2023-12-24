@@ -9,7 +9,7 @@ namespace PriceAPI.Controllers.URLControllers
     {
         IURLsDbAccess _URLsDbAccess;
 
-        URLController(IURLsDbAccess URLsDbAccess)
+        public URLController(IURLsDbAccess URLsDbAccess)
         {
             _URLsDbAccess = URLsDbAccess;
         }

@@ -9,7 +9,7 @@ namespace PriceAPI.Controllers.URLControllers
     {
 
         IXPathsDbAccess _xPathDbAccess;
-        URLxPathController(IXPathsDbAccess xPathDbAccess)
+        public URLxPathController(IXPathsDbAccess xPathDbAccess)
         {
             _xPathDbAccess = xPathDbAccess;
         }
@@ -20,7 +20,7 @@ namespace PriceAPI.Controllers.URLControllers
         {
             return new JsonResult(_xPathDbAccess.GetURLxPaths(URLId));
         }
-        [HttpPost("urls/{URLId}/xpaths/add")]
+        [HttpPost("urls/{URLId}/xpaths")]
         public void AddXPaths(int URLId , string xpath, string property, string atribute)
         {
             _xPathDbAccess.AddURLxPath(URLId, xpath, property, atribute);
@@ -30,6 +30,10 @@ namespace PriceAPI.Controllers.URLControllers
         {
             _xPathDbAccess.DeleteURLxPath(URLId, xpathId);
         }
-
+        [HttpPatch("urls/{URLId}/xpaths")]
+        public void UpdateXPath(int URLId, int xpathId, string newXPath = "", string newProperty = "", string newAtribute = "")
+        {
+            _xPathDbAccess.UpdateURLxPath(URLId, xpathId, newXPath, newProperty, newAtribute);
+        }
     }
 }

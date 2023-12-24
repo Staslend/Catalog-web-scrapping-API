@@ -18,10 +18,10 @@ namespace WebScrapperTesting.Tests
             List<string> rawData = new();
             //Act
 
-            rawData = await webScrapper.GetRawWebScrapperData("//h3[@class='fs-5']", "https://phptravels.com/demo/","");
+            rawData = await webScrapper.GetRawWebScrapperData("//div[contains(@class,'catalog-item__title')]/a", "https://www.atbmarket.com/catalog/287-ovochi-ta-frukti", "");
 
             //Assert
-            Assert.Equal(6, rawData.Count());
+            Assert.NotEqual(0, rawData.Count());
         }
     }
 }

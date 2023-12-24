@@ -8,24 +8,24 @@ namespace PriceAPI.Controllers.ShopControllers
     public class ShopController : ControllerBase
     {
         IShopsDbAccess _shopsDbAccess;
-        ShopController(IShopsDbAccess shopsDbAccess) {
+        public ShopController(IShopsDbAccess shopsDbAccess) {
             _shopsDbAccess = shopsDbAccess;
         }
 
-        [HttpGet("shops/")]
+        [HttpGet("shops")]
         public JsonResult GetShops()
         {
             
             return new JsonResult(_shopsDbAccess.GetShops());
         }
 
-        [HttpPost("shops/add/")]
+        [HttpPost("shops/add")]
         public void AddShop(string shop_name, string shop_domain_name)
         {
             _shopsDbAccess.AddShop(shop_name, shop_domain_name);
         }
 
-        [HttpDelete("shops/{shopId}/")]
+        [HttpDelete("shops/{shopId}")]
         public void DeleteShop(int shopId)
         {
             _shopsDbAccess.DeleteShop(shopId);

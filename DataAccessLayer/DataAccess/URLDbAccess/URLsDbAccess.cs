@@ -69,7 +69,8 @@ namespace DataAccessLayer.DataAccess.URLDbAccess
         {
             List<URLModel> returnList;
 
-            returnList = _context.URLs.ToList();
+            returnList = _context.URLs.Include(url => url.actions).Include(url=>url.xPaths).Include(url => url.shop).
+                Include(url => url.shop.xPaths).Include(url => url.shop.actions).ToList();
             return returnList;
         }
     }
