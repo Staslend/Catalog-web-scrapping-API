@@ -19,32 +19,32 @@ namespace DataAccessLayer.DataAccess.ShopDbAccess
             _context = context;
         }
 
-        public void AddShop(string shopName, string shopDomainName)
+        public async void AddShop(string shopName, string shopDomainName)
         {
             _context.shops.Add(new ShopModel
             {
                 shop_name = shopName,
                 shop_domain_name = shopDomainName
             });
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        public void DeleteShop(int shopId)
+        public async void DeleteShop(int shopId)
         {
-            ShopModel? shopToDelete = _context.shops.Include(s => s.actions).Include(u => u.xPaths).FirstOrDefault(u => u.shop_id == shopId);
+            ShopModel? shopToDelete = await _context.shops.Include(s => s.actions).Include(u => u.xPaths).AsQueryable().FirstOrDefaultAsync(u => u.shop_id == shopId);
 
             if (shopToDelete != null)
             {
                 _context.shops.Remove(shopToDelete);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
         }
 
-        public List<ShopModel> GetShops()
+        public async Task<List<ShopModel>> GetShops()
         {
             List<ShopModel> returnList;
 
-            returnList = _context.shops.ToList();
+            returnList = await  _context.shops.ToListAsync();
             return returnList;
         }
     }

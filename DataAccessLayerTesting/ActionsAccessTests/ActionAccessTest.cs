@@ -11,7 +11,7 @@ namespace DataAccessLayerTesting.ActionsAccessTests
     public class ActionAccessTest
     {
         [Fact]
-        public void GetURLActions_IdOfExistedURL_ListOfActions()
+        public async void GetURLActions_IdOfExistedURL_ListOfActions()
         {
             //Arrange
 
@@ -71,7 +71,7 @@ namespace DataAccessLayerTesting.ActionsAccessTests
 
             //Act
 
-            List<ActionModel> actions = actionsDbAccess.GetURLActions(1);
+            List<ActionModel> actions = await actionsDbAccess.GetURLActions(1);
 
             //Assert
         
@@ -83,7 +83,7 @@ namespace DataAccessLayerTesting.ActionsAccessTests
         }
 
         [Fact]
-        public void GetShopActions_IdOfExistedShop_ListOfActions()
+        public async void GetShopActions_IdOfExistedShop_ListOfActions()
         {
             //Arrange
 
@@ -143,7 +143,7 @@ namespace DataAccessLayerTesting.ActionsAccessTests
 
             //Act
 
-            List<ActionModel> actions = actionsDbAccess.GetShopActions(2);
+            List<ActionModel> actions = await actionsDbAccess.GetShopActions(2);
 
             //Assert
 

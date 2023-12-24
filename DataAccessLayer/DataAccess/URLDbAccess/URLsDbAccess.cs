@@ -19,9 +19,9 @@ namespace DataAccessLayer.DataAccess.URLDbAccess
             _context = context;
         }
 
-        public void AddURL(string URLName, string URL, int shopId)
+        public async void AddURL(string URLName, string URL, int shopId)
         {
-            ShopModel? shopToAdd = _context.shops.Find(shopId);
+            ShopModel? shopToAdd = await _context.shops.FindAsync(shopId);
 
             if (shopToAdd == null)
             {
@@ -39,13 +39,13 @@ namespace DataAccessLayer.DataAccess.URLDbAccess
                 shop_id = shopId
             });
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
         }
 
-        public void ChangeURL(int URLId, string newURL)
+        public async void ChangeURL(int URLId, string newURL)
         {
-            URLModel? urlToChange = _context.URLs.Include(u => u.actions).Include(u => u.xPaths).FirstOrDefault(u => u.url_id == URLId);
+            URLModel? urlToChange = await _context.URLs.Include(u => u.actions).Include(u => u.xPaths).FirstOrDefaultAsync(u => u.url_id == URLId);
 
             if (urlToChange != null)
             {
@@ -54,23 +54,23 @@ namespace DataAccessLayer.DataAccess.URLDbAccess
             }
         }
 
-        public void DeleteURL(int URLId)
+        public async void DeleteURL(int URLId)
         {
-            URLModel? urlToDelete = _context.URLs.Include(u => u.actions).Include(u => u.xPaths).FirstOrDefault(u => u.url_id == URLId);
+            URLModel? urlToDelete = await _context.URLs.Include(u => u.actions).Include(u => u.xPaths).FirstOrDefaultAsync(u => u.url_id == URLId);
 
             if (urlToDelete != null)
             {
                 _context.URLs.Remove(urlToDelete);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
         }
 
-        public List<URLModel> GetURLs()
+        public async Task<List<URLModel>> GetURLs()
         {
             List<URLModel> returnList;
 
-            returnList = _context.URLs.Include(url => url.actions).Include(url=>url.xPaths).Include(url => url.shop).
-                Include(url => url.shop.xPaths).Include(url => url.shop.actions).ToList();
+            returnList = await _context.URLs.Include(url => url.actions).Include(url=>url.xPaths).Include(url => url.shop).
+                Include(url => url.shop.xPaths).Include(url => url.shop.actions).ToListAsync();
             return returnList;
         }
     }

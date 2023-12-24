@@ -22,21 +22,21 @@ namespace PriceAPI.Services.ProductService
             _webScrapperDataProvider = webScrapperDataProvider;
         }
 
-        public ProductModel GetProduct(int productId)
+        public async Task<ProductModel> GetProduct(int productId)
         {
-            return _productsDbAccess.GetProduct(productId);
+            return await _productsDbAccess.GetProduct(productId);
         }
 
-        public List<ProductModel> GetProducts(ProductQueryData productQueryData)
+        public async Task<List<ProductModel>> GetProducts(ProductQueryData productQueryData)
         {
-            return _productsDbAccess.GetProducts(productQueryData);
+            return await _productsDbAccess.GetProducts(productQueryData);
         }
 
-        public void UpdateProducts()
+        public async void UpdateProducts()
         {
             _productsDbAccess.ClearDbProductData();
 
-            foreach (URLModel url in _URLsDataAccess.GetURLs())
+            foreach (URLModel url in await _URLsDataAccess.GetURLs())
             {
                 if (url.multipaged)
                 {

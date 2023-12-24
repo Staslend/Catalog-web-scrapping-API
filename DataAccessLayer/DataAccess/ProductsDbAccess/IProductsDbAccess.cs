@@ -11,7 +11,7 @@ namespace DataAccessLayer.DataAccess.ProductsDbAccess
     {
         public void ClearDbProductData();
         public void AddDbProductData(List<ProductModel> products);
-        List<ProductModel> GetProducts(ProductQueryData productQueryData);
-        ProductModel GetProduct(int productId);
+        Task<List<ProductModel>> GetProducts(ProductQueryData productQueryData);
+        Task<ProductModel> GetProduct(int productId);
     }
 }

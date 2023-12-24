@@ -9,8 +9,8 @@ namespace DataAccessLayer.DataAccess.ActionDbAccess
 {
     public interface IActionsDbAccess
     {
-        public List<ActionModel> GetURLActions(int URLId);
-        public List<ActionModel> GetShopActions(int shopId);
+        public Task<List<ActionModel>> GetURLActions(int URLId);
+        public Task<List<ActionModel>> GetShopActions(int shopId);
         public void AddURLAction(int URLId, ActionName actionName, List<string> actionData);
         public void AddShopAction(int shopId, ActionName actionName, List<string> actionData);
         public void DeleteURLAction(int URLId, int actionId);

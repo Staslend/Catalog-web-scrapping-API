@@ -34,23 +34,23 @@ namespace DataAccessLayer.DataAccess.ProductsDbAccess
             _context = productAPIDbContext;
         }
 
-        public void AddDbProductData(List<ProductModel> products)
+        public async void AddDbProductData(List<ProductModel> products)
         {
             _context.products.AttachRange(products);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        public void ClearDbProductData()
+        public async void ClearDbProductData()
         {
 
             _context.products.RemoveRange(_context.products);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        public ProductModel GetProduct(int productId)
+        public async Task<ProductModel> GetProduct(int productId)
         {
             ProductModel? product;
-            product = _context.products.Include(p => p.product_text_data).Include(p => p.product_numeric_data).FirstOrDefault(p => p.product_id == productId);
+            product = await  _context.products.Include(p => p.product_text_data).Include(p => p.product_numeric_data).FirstAsync(p => p.product_id == productId);
 
             if (product == null)
             {
@@ -59,7 +59,7 @@ namespace DataAccessLayer.DataAccess.ProductsDbAccess
             return product;
         }
 
-        public List<ProductModel> GetProducts(ProductQueryData productQueryData)
+        public async Task<List<ProductModel>> GetProducts(ProductQueryData productQueryData)
         {
             IQueryable<ProductModel> returnProducQuery = _context.products;
 
@@ -132,9 +132,8 @@ namespace DataAccessLayer.DataAccess.ProductsDbAccess
                 returnProducQuery.Skip(productQueryData.page * productQueryData.pageSize).Take(productQueryData.pageSize).ToList();
             }
 
-            var testList = returnProducQuery.ToList();
 
-            return returnProducQuery.ToList();
+            return (await returnProducQuery.ToListAsync());
 
         }
     }

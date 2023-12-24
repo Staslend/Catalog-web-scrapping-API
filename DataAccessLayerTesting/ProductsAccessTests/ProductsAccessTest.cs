@@ -2,6 +2,7 @@
 using DatabaseLayer.DataContexts;
 using DatabaseLayer.Models;
 using Microsoft.EntityFrameworkCore;
+using MockQueryable.Moq;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ namespace DataAccessLayerTesting.ProductsAccessTests
     public class ProductsAccessTest
     {
         [Fact]
-        public void GetProducts_SecondPageAndNoOrderingData_ListWithOneProduct()
+        public async void GetProducts_SecondPageAndNoOrderingData_ListWithOneProduct()
         {
             //Arrange
             var products = new List<ProductModel>
@@ -99,7 +100,7 @@ namespace DataAccessLayerTesting.ProductsAccessTests
             IProductsDbAccess productsDbAccess = new ProductsDbAccess(dbContextMock.Object);
             //Act
 
-            ProductModel unsortedProduct = productsDbAccess.GetProduct(1);
+            ProductModel unsortedProduct = await  productsDbAccess.GetProduct(1);
 
             //Assert
             Assert.Equal(1, unsortedProduct.product_id);
@@ -107,7 +108,7 @@ namespace DataAccessLayerTesting.ProductsAccessTests
 
         }
         [Fact]
-        public void GetProducts_ProductFilteredByProductName_SingleProduct()
+        public async void GetProducts_ProductFilteredByProductName_SingleProduct()
         {
             var products = new List<ProductModel>
             {
@@ -222,7 +223,7 @@ namespace DataAccessLayerTesting.ProductsAccessTests
 
             //Act
 
-            List<ProductModel> product = productsDbAccess.GetProducts(productQueryData);
+            List<ProductModel> product = await productsDbAccess.GetProducts(productQueryData);
 
             //Assert
             Assert.Single(product);
@@ -230,7 +231,7 @@ namespace DataAccessLayerTesting.ProductsAccessTests
                
         }
         [Fact]
-        public void GetProducts_GetProductFilteredByProductDataAndOrderedByName_ListOfProducts()
+        public async void GetProducts_GetProductFilteredByProductDataAndOrderedByName_ListOfProducts()
         {
             //Arrange
             var products = new List<ProductModel>
@@ -347,7 +348,7 @@ namespace DataAccessLayerTesting.ProductsAccessTests
 
             //Act
 
-            List<ProductModel> filteredOrderdProducts = productsDbAccess.GetProducts(productQueryData);
+            List<ProductModel> filteredOrderdProducts = await productsDbAccess.GetProducts(productQueryData);
 
             //Assert
             Assert.Equal(2, filteredOrderdProducts[0].product_id);
@@ -358,7 +359,7 @@ namespace DataAccessLayerTesting.ProductsAccessTests
         }
 
         [Fact]
-        public void GetProducts_GetProductsWithEmptyDataObject_RawListOfProducts()
+        public async void GetProducts_GetProductsWithEmptyDataObject_RawListOfProducts()
         {
             //Arrange
             var products = new List<ProductModel>
@@ -469,7 +470,7 @@ namespace DataAccessLayerTesting.ProductsAccessTests
 
             //Act
 
-            List<ProductModel> filteredOrderdProducts = productsDbAccess.GetProducts(productQueryData);
+            List<ProductModel> filteredOrderdProducts = await productsDbAccess.GetProducts(productQueryData);
 
             //Assert
             Assert.Equal(3, filteredOrderdProducts.Count);

@@ -19,7 +19,7 @@ namespace DataAccessLayer.DataAccess.ActionDbAccess
             _context = context;
         }
 
-        public void AddShopAction(int shopId, ActionName actionName, List<string> actionData)
+        public async void AddShopAction(int shopId, ActionName actionName, List<string> actionData)
         {
             ActionModel newAction = new ActionModel
             {
@@ -30,7 +30,7 @@ namespace DataAccessLayer.DataAccess.ActionDbAccess
                 }).ToList(),
             };
 
-            ShopModel editedShop = _context.shops.Where(s => s.shop_id == shopId).Include(s => s.actions).First();
+            ShopModel editedShop = await _context.shops.Where(s => s.shop_id == shopId).Include(s => s.actions).FirstAsync();
 
             if (editedShop != null)
             {
@@ -43,11 +43,11 @@ namespace DataAccessLayer.DataAccess.ActionDbAccess
                     editedShop.actions = new List<ActionModel> { newAction };
                 }
             }
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
         }
 
-        public void AddURLAction(int URLId, ActionName actionName, List<string> actionData)
+        public async void AddURLAction(int URLId, ActionName actionName, List<string> actionData)
         {
             ActionModel newAction = new ActionModel
             {
@@ -58,7 +58,7 @@ namespace DataAccessLayer.DataAccess.ActionDbAccess
                 }).ToList(),
             };
 
-            URLModel url = _context.URLs.Include(u => u.actions).Where(u => u.url_id == URLId && u.xPaths != null).First();
+            URLModel url = await _context.URLs.Include(u => u.actions).Where(u => u.url_id == URLId && u.xPaths != null).FirstAsync();
 
             if (url != null)
             {
@@ -71,42 +71,42 @@ namespace DataAccessLayer.DataAccess.ActionDbAccess
                     url.actions = new List<ActionModel> { newAction };
                 }
             }
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        public void DeleteShopAction(int shopId, int actionId)
+        public async void DeleteShopAction(int shopId, int actionId)
         {
-            ShopModel shop = _context.shops.Include(s => s.actions).Where(s => s.shop_id == shopId && s.xPaths != null).First();
+            ShopModel shop = await _context.shops.Include(s => s.actions).Where(s => s.shop_id == shopId && s.xPaths != null).FirstAsync();
 
             if (shop.actions != null)
             {
-                ActionModel action = shop.actions.First(a => a.action_id == actionId);
+                ActionModel action = await shop.actions.AsQueryable().FirstAsync(a => a.action_id == actionId);
 
                 shop.actions.Remove(action);
 
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
         }
 
-        public void DeleteURLAction(int URLId, int actionId)
+        public async void DeleteURLAction(int URLId, int actionId)
         {
-            URLModel url = _context.URLs.Include(u => u.actions).Where(u => u.url_id == URLId && u.xPaths != null).First();
+            URLModel url = await _context.URLs.Include(u => u.actions).Where(u => u.url_id == URLId && u.xPaths != null).FirstAsync();
 
             if (url.xPaths != null)
             {
-                XPathModel xPath = url.xPaths.First(xp => xp.xpath_id == URLId);
+                XPathModel xPath = await url.xPaths.AsQueryable().FirstAsync(xp => xp.xpath_id == URLId);
 
                 url.xPaths.Remove(xPath);
 
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
         }
 
-        public List<ActionModel> GetShopActions(int shopId)
+        public async Task<List<ActionModel>> GetShopActions(int shopId)
         {
             List<ActionModel> returnList;
 
-            ShopModel shop = _context.shops.Include(u => u.actions).Where(u => u.shop_id == shopId && u.actions != null).First();
+            ShopModel shop = await _context.shops.Include(u => u.actions).Where(u => u.shop_id == shopId && u.actions != null).FirstAsync();
 
             if (shop.actions != null)
             {
@@ -116,11 +116,11 @@ namespace DataAccessLayer.DataAccess.ActionDbAccess
             return returnList;
         }
 
-        public List<ActionModel> GetURLActions(int URLId)
+        public async Task<List<ActionModel>> GetURLActions(int URLId)
         {
             List<ActionModel> returnList;
 
-            URLModel url = _context.URLs.Include(u => u.actions).Where(u => u.url_id == URLId && u.actions != null).First();
+            URLModel url = await _context.URLs.Include(u => u.actions).Where(u => u.url_id == URLId && u.actions != null).FirstAsync();
 
             if (url.actions != null)
             {

@@ -147,7 +147,7 @@ namespace DataAccessLayer.DataAccess.XPathDbAccess
                 xPathToEdit.atribute = newAtribute;
             }
 
-            await _context.SaveChangesAsync();
+            _context.Update(xPathToEdit);
         }
         public async void UpdateURLxPath(int URLId, int xpathId, string newXPath = "", string newProperty = "", string newAtribute = "")
         {
@@ -169,7 +169,7 @@ namespace DataAccessLayer.DataAccess.XPathDbAccess
             {
                 xPathToEdit.atribute = newAtribute;
             }
-            await _context.SaveChangesAsync();
+            _context.Update(xPathToEdit);
         }
     }
 }

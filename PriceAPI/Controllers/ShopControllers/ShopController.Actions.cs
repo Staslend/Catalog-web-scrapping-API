@@ -17,9 +17,9 @@ namespace PriceAPI.Controllers.ShopControllers
 
 
         [HttpGet("shops/{shopId}/actions")]
-        public JsonResult GetActions(int shopId)
+        public async Task<JsonResult> GetActions(int shopId)
         {
-            List<ActionModel> actionsToReturn = _actionsDbAccess.GetShopActions(shopId);
+            List<ActionModel> actionsToReturn = await _actionsDbAccess.GetShopActions(shopId);
             return new JsonResult(actionsToReturn);
         }
 

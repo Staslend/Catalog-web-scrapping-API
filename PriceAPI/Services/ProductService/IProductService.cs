@@ -6,9 +6,9 @@ namespace PriceAPI.Services.ProductService
 {
     public interface IProductService
     {
-        public List<ProductModel> GetProducts(ProductQueryData productQueryData);
+        public Task<List<ProductModel>> GetProducts(ProductQueryData productQueryData);
 
-        public ProductModel GetProduct(int productId);
+        public Task<ProductModel> GetProduct(int productId);
         public void UpdateProducts();
 
     }
