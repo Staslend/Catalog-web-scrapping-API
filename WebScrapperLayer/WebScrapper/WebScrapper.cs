@@ -12,9 +12,11 @@ namespace WebScrapperLayer.WebScrapper
         HtmlWeb _htmlWeb;
         HtmlDocument _htmlDocument;
 
+
         string _previousUrl = String.Empty;
 
-        HtmlNodeCollection _previousNamenodes = null;
+        HtmlNode _previousNode = null;        
+
         HtmlNodeCollection _namenodes = null;
 
         public WebScrapper() {
@@ -40,14 +42,8 @@ namespace WebScrapperLayer.WebScrapper
         {
             if(_previousUrl != url)  _htmlDocument = await _htmlWeb.LoadFromWebAsync(url);
 
-            _previousNamenodes = _namenodes;
             _namenodes = _htmlDocument.DocumentNode.SelectNodes(xPath);
 
-            //Check if the same data was loaded like in previous request
-            if(_previousNamenodes is not null && _namenodes is not null)
-            {
-                if (NodeCollectionsAreIdentical(_previousNamenodes, _namenodes)) return null;
-            }
 
             if (_namenodes is not null)
             {
@@ -57,7 +53,6 @@ namespace WebScrapperLayer.WebScrapper
 
                 }
                 return _namenodes.Select(n => n.Attributes[atribute].Value).ToList();
-
             }
             else return new List<string>();
         }

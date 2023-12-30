@@ -20,7 +20,7 @@ namespace DataAccessLayer.DataAccess.XPathDbAccess
             _context = context;
         }
 
-        public async void AddShopxPath(int shopId, string xpath, string property, string atribute)
+        public async Task AddShopxPath(int shopId, string xpath, string property, string atribute)
         {
             XPathModel newXPath = new XPathModel
             {
@@ -45,7 +45,7 @@ namespace DataAccessLayer.DataAccess.XPathDbAccess
             await _context.SaveChangesAsync();
         }
 
-        public async void AddURLxPath(int URLId, string xpath, string property, string atribute)
+        public async Task AddURLxPath(int URLId, string xpath, string property, string atribute)
         {
             XPathModel newXPath = new XPathModel
             {
@@ -70,7 +70,7 @@ namespace DataAccessLayer.DataAccess.XPathDbAccess
             await _context.SaveChangesAsync();
         }
 
-        public async void DeleteShopxPath(int shopId, int xPathId)
+        public async Task DeleteShopxPath(int shopId, int xPathId)
         {
             ShopModel shop = await _context.shops.Include(s => s.xPaths).Where(s => s.shop_id == shopId && s.xPaths != null).FirstAsync();
 
@@ -84,7 +84,7 @@ namespace DataAccessLayer.DataAccess.XPathDbAccess
             }
         }
 
-        public async void DeleteURLxPath(int URLId, int xPathId)
+        public async Task DeleteURLxPath(int URLId, int xPathId)
         {
             URLModel url = await _context.URLs.Include(u => u.xPaths).Where(u => u.url_id == URLId && u.xPaths != null).FirstAsync();
 
@@ -126,46 +126,46 @@ namespace DataAccessLayer.DataAccess.XPathDbAccess
             return returnList;
         }
 
-        public async void UpdateShopxPath(int shopId, int xpathId, string newXPath = "", string newProperty = "", string newAtribute = "")
+        public async Task UpdateShopxPath(int shopId, int xpathId, string newXPath = "", string newProperty = "", string newAtribute = "")
         {
             ShopModel shop = await _context.shops.Include(s => s.xPaths).Where(s => s.shop_id == shopId && s.xPaths != null).FirstAsync();
 
-            XPathModel xPathToEdit = await shop.xPaths.Where(xPath => xPath.xpath_id == xpathId).AsQueryable().FirstAsync();
+            XPathModel xPathToEdit = shop.xPaths.Where(xPath => xPath.xpath_id == xpathId).First();
 
-            if (newXPath.IsNullOrEmpty())
+            if (!newXPath.IsNullOrEmpty())
             {
                 xPathToEdit.xpath = newXPath; 
             }
 
-            if(newProperty.IsNullOrEmpty())
+            if(!newProperty.IsNullOrEmpty())
             {
-                xPathToEdit.property_name = newXPath;
+                xPathToEdit.property_name = newProperty;
             }
 
-            if(newAtribute.IsNullOrEmpty())
+            if(!newAtribute.IsNullOrEmpty())
             {
                 xPathToEdit.atribute = newAtribute;
             }
 
-            _context.Update(xPathToEdit);
+            await _context.SaveChangesAsync();
         }
-        public async void UpdateURLxPath(int URLId, int xpathId, string newXPath = "", string newProperty = "", string newAtribute = "")
+        public async Task UpdateURLxPath(int URLId, int xpathId, string newXPath = "", string newProperty = "", string newAtribute = "")
         {
             URLModel url = await _context.URLs.Include(u => u.xPaths).Where(u => u.url_id == URLId && u.xPaths != null).FirstAsync();
 
-            XPathModel xPathToEdit = await url.xPaths.Where(xPath => xPath.xpath_id == xpathId).AsQueryable().FirstAsync();
+            XPathModel xPathToEdit = url.xPaths.Where(xPath => xPath.xpath_id == xpathId).First();
 
-            if (newXPath.IsNullOrEmpty())
+            if (!newXPath.IsNullOrEmpty())
             {
                 xPathToEdit.xpath = newXPath;
             }
 
-            if (newProperty.IsNullOrEmpty())
+            if (!newProperty.IsNullOrEmpty())
             {
                 xPathToEdit.property_name = newXPath;
             }
 
-            if (newAtribute.IsNullOrEmpty())
+            if (!newAtribute.IsNullOrEmpty())
             {
                 xPathToEdit.atribute = newAtribute;
             }

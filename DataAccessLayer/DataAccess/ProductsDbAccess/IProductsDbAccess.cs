@@ -9,8 +9,8 @@ namespace DataAccessLayer.DataAccess.ProductsDbAccess
 {
     public interface IProductsDbAccess
     {
-        public void ClearDbProductData();
-        public void AddDbProductData(List<ProductModel> products);
+        public Task ClearDbProductData();
+        public Task AddDbProductData(List<ProductModel> products);
         Task<List<ProductModel>> GetProducts(ProductQueryData productQueryData);
         Task<ProductModel> GetProduct(int productId);
     }

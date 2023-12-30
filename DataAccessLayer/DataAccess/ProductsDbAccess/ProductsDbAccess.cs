@@ -1,14 +1,6 @@
-﻿using Azure;
-using DatabaseLayer.DataContexts;
+﻿using DatabaseLayer.DataContexts;
 using DatabaseLayer.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataAccessLayer.DataAccess.ProductsDbAccess
 {
@@ -34,13 +26,13 @@ namespace DataAccessLayer.DataAccess.ProductsDbAccess
             _context = productAPIDbContext;
         }
 
-        public async void AddDbProductData(List<ProductModel> products)
+        public async Task AddDbProductData(List<ProductModel> products)
         {
             _context.products.AttachRange(products);
             await _context.SaveChangesAsync();
         }
 
-        public async void ClearDbProductData()
+        public async Task ClearDbProductData()
         {
 
             _context.products.RemoveRange(_context.products);
@@ -63,8 +55,11 @@ namespace DataAccessLayer.DataAccess.ProductsDbAccess
         {
             IQueryable<ProductModel> returnProducQuery = _context.products;
 
+            var testList1 = returnProducQuery.ToList();
+
+
             //Filtering
-            if(productQueryData.textDataFilter.Count != 0 && productQueryData.numericDataFilter.Count != 0)
+            if (productQueryData.textDataFilter.Count != 0 || productQueryData.numericDataFilter.Count != 0)
             {
                 IQueryable<int> productIdsFilteredByTextFilters = null;
                 IQueryable<int> productIdsFilteredByNumericFilters = null;
@@ -113,6 +108,7 @@ namespace DataAccessLayer.DataAccess.ProductsDbAccess
                 }
             }
 
+            var testList2 = returnProducQuery.ToList();
 
             //Ordering
             if (!string.IsNullOrEmpty(productQueryData.order))
@@ -126,6 +122,8 @@ namespace DataAccessLayer.DataAccess.ProductsDbAccess
                                     select new ProductModel { product_id = x.product_id };
             }
 
+            var testList3 = returnProducQuery.ToList();
+
             //Paggination
             if (productQueryData.page != 0 && productQueryData.pageSize != 0)
             {
@@ -133,7 +131,34 @@ namespace DataAccessLayer.DataAccess.ProductsDbAccess
             }
 
 
-            return (await returnProducQuery.ToListAsync());
+            //Loading
+            List<ProductModel> returnList = returnProducQuery.ToList();
+
+            for(int i = 0; i < returnList.Count; i++)
+            {
+                returnList[i] =  _context.products.Select(p => p).Where(p => p.product_id == returnList[i].product_id).
+                    Include(p => p.product_text_data).Include(p => p.product_numeric_data).First();
+            }
+
+            /*
+            foreach (ProductModel product in returnList)
+            {
+                var e = _context.Entry(product);
+
+
+                if (_context.Entry(product).Collection(p => p.product_text_data) is not null)
+                {
+                    await _context.Entry(product).Collection(p => p.product_text_data).LoadAsync();
+                }
+                if (_context.Entry(product).Collection(p => p.product_numeric_data) is not null)
+                {
+                    await _context.Entry(product).Collection(p => p.product_numeric_data).LoadAsync();
+                }
+            }
+            */
+
+
+            return returnList;
 
         }
     }

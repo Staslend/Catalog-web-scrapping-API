@@ -9,7 +9,7 @@ namespace PriceAPI.Services.ProductService
         public Task<List<ProductModel>> GetProducts(ProductQueryData productQueryData);
 
         public Task<ProductModel> GetProduct(int productId);
-        public void UpdateProducts();
+        public Task UpdateProducts();
 
     }
 }

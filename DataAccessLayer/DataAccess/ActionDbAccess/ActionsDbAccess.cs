@@ -19,7 +19,7 @@ namespace DataAccessLayer.DataAccess.ActionDbAccess
             _context = context;
         }
 
-        public async void AddShopAction(int shopId, ActionName actionName, List<string> actionData)
+        public async Task AddShopAction(int shopId, ActionName actionName, List<string> actionData)
         {
             ActionModel newAction = new ActionModel
             {
@@ -47,7 +47,7 @@ namespace DataAccessLayer.DataAccess.ActionDbAccess
 
         }
 
-        public async void AddURLAction(int URLId, ActionName actionName, List<string> actionData)
+        public async Task AddURLAction(int URLId, ActionName actionName, List<string> actionData)
         {
             ActionModel newAction = new ActionModel
             {
@@ -74,13 +74,13 @@ namespace DataAccessLayer.DataAccess.ActionDbAccess
             await _context.SaveChangesAsync();
         }
 
-        public async void DeleteShopAction(int shopId, int actionId)
+        public async Task DeleteShopAction(int shopId, int actionId)
         {
             ShopModel shop = await _context.shops.Include(s => s.actions).Where(s => s.shop_id == shopId && s.xPaths != null).FirstAsync();
 
             if (shop.actions != null)
             {
-                ActionModel action = await shop.actions.AsQueryable().FirstAsync(a => a.action_id == actionId);
+                ActionModel action =  shop.actions.First(a => a.action_id == actionId);
 
                 shop.actions.Remove(action);
 
@@ -88,13 +88,13 @@ namespace DataAccessLayer.DataAccess.ActionDbAccess
             }
         }
 
-        public async void DeleteURLAction(int URLId, int actionId)
+        public async Task DeleteURLAction(int URLId, int actionId)
         {
             URLModel url = await _context.URLs.Include(u => u.actions).Where(u => u.url_id == URLId && u.xPaths != null).FirstAsync();
 
             if (url.xPaths != null)
             {
-                XPathModel xPath = await url.xPaths.AsQueryable().FirstAsync(xp => xp.xpath_id == URLId);
+                XPathModel xPath = url.xPaths.First(xp => xp.xpath_id == URLId);
 
                 url.xPaths.Remove(xPath);
 
@@ -106,7 +106,7 @@ namespace DataAccessLayer.DataAccess.ActionDbAccess
         {
             List<ActionModel> returnList;
 
-            ShopModel shop = await _context.shops.Include(u => u.actions).Where(u => u.shop_id == shopId && u.actions != null).FirstAsync();
+            ShopModel shop = await _context.shops.Include(u => u.actions).ThenInclude(a => a.action_data).Where(u => u.shop_id == shopId && u.actions != null).FirstAsync();
 
             if (shop.actions != null)
             {

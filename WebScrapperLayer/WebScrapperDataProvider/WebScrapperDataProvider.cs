@@ -13,6 +13,8 @@ namespace WebScrapperLayer.WebScrapperDataProvider
         WebScrapper.WebScrapper _webScrapper;
         WebScrapperActions.WebScrapperActions _webScrapperActions;
 
+        List<ProductModel> _previousProductList;
+
         public WebScrapperDataProvider()
         {
             _webScrapper = new WebScrapper.WebScrapper();
@@ -65,7 +67,7 @@ namespace WebScrapperLayer.WebScrapperDataProvider
 
 
             }
-        
+
             return _webScrapperActions.ProcessProductData(finalProductList, actions);
         }
     }

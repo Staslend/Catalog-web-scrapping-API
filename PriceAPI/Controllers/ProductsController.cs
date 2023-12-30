@@ -2,6 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using PriceAPI.Services.ProductService;
 using PriceAPI.Services.ProductService;
+using System.Security.Cryptography.Xml;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace PriceAPI.Controllers
 {
@@ -22,20 +25,30 @@ namespace PriceAPI.Controllers
         [HttpGet("products/{id}")]
         public async Task<JsonResult> Products(int id)
         {
-            return new JsonResult(_productService.GetProduct(id));
+            JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions
+            {
+                ReferenceHandler = ReferenceHandler.IgnoreCycles,
+                WriteIndented = true
+            };
+            return new JsonResult(await _productService.GetProduct(id), jsonSerializerOptions);
         }
 
         [HttpGet("products/")]
         public async Task<JsonResult> Products([FromQuery] ProductQueryData productQueryData)
         {
-            return new JsonResult(_productService.GetProducts(productQueryData));
+            JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions
+            {
+                ReferenceHandler = ReferenceHandler.IgnoreCycles,
+                WriteIndented = true
+            };
+            return new JsonResult(await _productService.GetProducts(productQueryData), jsonSerializerOptions);
         }
 
         //TODO: Bad responce 
         [HttpPatch("products/")]
         public async Task<IActionResult> Update()
         {
-            _productService.UpdateProducts();
+            await _productService.UpdateProducts();
             return Ok("Updade started");
         }
     }

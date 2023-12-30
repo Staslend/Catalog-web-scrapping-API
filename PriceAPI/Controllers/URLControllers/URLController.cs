@@ -1,5 +1,8 @@
 ﻿using DataAccessLayer.DataAccess.URLDbAccess;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json.Serialization;
+using System.Text.Json;
+using System;
 
 namespace PriceAPI.Controllers.URLControllers
 {
@@ -15,25 +18,31 @@ namespace PriceAPI.Controllers.URLControllers
         }
 
         [HttpGet("urls/")]
-        public JsonResult GetURLs()
+        public async Task<JsonResult> GetURLs()
         {
-            return new JsonResult(_URLsDbAccess.GetURLs());
+
+            JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions
+            {
+                ReferenceHandler = ReferenceHandler.IgnoreCycles,
+                WriteIndented = true
+            };
+            return new JsonResult(await _URLsDbAccess.GetURLs(), jsonSerializerOptions);
         }
 
         [HttpPost("urls/add/")]
-        public void AddURL(string url_name, string url, int shopId)
+        public async Task AddURL(string url_name, string url, int shopId, bool multipaged)
         {
-            _URLsDbAccess.AddURL(url_name, url, shopId);
+            await _URLsDbAccess.AddURL(url_name, url, shopId, multipaged);
         }
         [HttpDelete("urls/{URLId}/")]
-        public void DeleteURL(int URLId)
+        public async Task DeleteURL(int URLId)
         {
-            _URLsDbAccess.DeleteURL(URLId);
+            await _URLsDbAccess.DeleteURL(URLId);
         }
         [HttpPatch("urls/{URLId}/")]
-        public void ChangeURL(int URLId, string newURl)
+        public async Task ChangeURL(int URLId, string newURl)
         {
-            _URLsDbAccess.ChangeURL(URLId, newURl);
+            await _URLsDbAccess.ChangeURL(URLId, newURl);
         }
     }
 }

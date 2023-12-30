@@ -48,6 +48,7 @@ namespace WebScrapperLayer.WebScrapperActions
                 product_property_name = action.action_data.ElementAt(0).action_data,
                 property_value = double.Parse(productTextData.Single(x => x.product_property_name == action.action_data.ElementAt(0).action_data).property_value)
             }) ;
+            productTextData.Remove(productTextData.Select(td => td).Where(td => td.product_property_name == action.action_data[0].action_data).First());
         }
     }
 }

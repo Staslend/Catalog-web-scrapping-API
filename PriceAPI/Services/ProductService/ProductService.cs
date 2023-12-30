@@ -14,6 +14,7 @@ namespace PriceAPI.Services.ProductService
 
         IWebScrapperDataProvider _webScrapperDataProvider;
 
+        List<ProductModel> _previousProductList;
 
         public ProductService(IProductsDbAccess productsDbAccess, IURLsDbAccess URLsDbAccess, IWebScrapperDataProvider webScrapperDataProvider)
         {
@@ -32,9 +33,9 @@ namespace PriceAPI.Services.ProductService
             return await _productsDbAccess.GetProducts(productQueryData);
         }
 
-        public async void UpdateProducts()
+        public async Task UpdateProducts()
         {
-            _productsDbAccess.ClearDbProductData();
+            await _productsDbAccess.ClearDbProductData();
 
             foreach (URLModel url in await _URLsDataAccess.GetURLs())
             {
@@ -44,22 +45,26 @@ namespace PriceAPI.Services.ProductService
 
                     for(int pageNumber = 1; true; pageNumber++)
                     {
-                        urlStringBuilder.Remove(url.url.Length, urlStringBuilder.Length);
+                        if(urlStringBuilder.Length != url.url.Length) urlStringBuilder.Remove(url.url.Length, urlStringBuilder.Length - url.url.Length);
                         urlStringBuilder.Append("/");
                         urlStringBuilder.Append(url.pageProperty);
                         urlStringBuilder.Append(pageNumber);
 
+                        bool sameDataWasLoaded = false;
                         List<ProductModel> newProducts = _webScrapperDataProvider.GetProductsData(
                             url.shop is null ? url.xPaths : url.shop.xPaths,
                             url.shop is null ? url.actions : url.shop.actions,
                             urlStringBuilder.ToString()).Result;
 
-                        if (newProducts is null)
+                        if (_previousProductList is not null && _previousProductList.SequenceEqual(newProducts, new ProductComparer()))
                         {
                             break;
                         }
-                        else _productsDbAccess.AddDbProductData(newProducts);
-
+                        else
+                        {
+                            _previousProductList = new List<ProductModel>(newProducts);
+                            _productsDbAccess.AddDbProductData(newProducts);
+                        }
                     }
 
                 }

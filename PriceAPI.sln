@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebScrapperTesting", "WebSc
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccessLayerTesting", "DataAccessLayerTesting\DataAccessLayerTesting.csproj", "{DFA8CFE4-232A-4DDE-A7DD-ED93B2896509}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatalogWebAPITests", "CatalogWebAPITests\CatalogWebAPITests.csproj", "{A6C1AE5C-1BCC-4D55-AAC5-A57CBD38A66E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{DFA8CFE4-232A-4DDE-A7DD-ED93B2896509}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DFA8CFE4-232A-4DDE-A7DD-ED93B2896509}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DFA8CFE4-232A-4DDE-A7DD-ED93B2896509}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6C1AE5C-1BCC-4D55-AAC5-A57CBD38A66E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6C1AE5C-1BCC-4D55-AAC5-A57CBD38A66E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6C1AE5C-1BCC-4D55-AAC5-A57CBD38A66E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6C1AE5C-1BCC-4D55-AAC5-A57CBD38A66E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -19,7 +19,7 @@ namespace DataAccessLayer.DataAccess.ShopDbAccess
             _context = context;
         }
 
-        public async void AddShop(string shopName, string shopDomainName)
+        public async Task AddShop(string shopName, string shopDomainName)
         {
             _context.shops.Add(new ShopModel
             {
@@ -29,7 +29,7 @@ namespace DataAccessLayer.DataAccess.ShopDbAccess
             await _context.SaveChangesAsync();
         }
 
-        public async void DeleteShop(int shopId)
+        public async Task DeleteShop(int shopId)
         {
             ShopModel? shopToDelete = await _context.shops.Include(s => s.actions).Include(u => u.xPaths).AsQueryable().FirstOrDefaultAsync(u => u.shop_id == shopId);
 

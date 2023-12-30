@@ -19,7 +19,7 @@ namespace DataAccessLayer.DataAccess.URLDbAccess
             _context = context;
         }
 
-        public async void AddURL(string URLName, string URL, int shopId)
+        public async Task AddURL(string URLName, string URL, int shopId, bool multipaged)
         {
             ShopModel? shopToAdd = await _context.shops.FindAsync(shopId);
 
@@ -36,14 +36,15 @@ namespace DataAccessLayer.DataAccess.URLDbAccess
                 url = URL,
                 url_name = URLName,
                 shop = shopToAdd,
-                shop_id = shopId
+                shop_id = shopId,
+                multipaged = multipaged
             });
 
             await _context.SaveChangesAsync();
 
         }
 
-        public async void ChangeURL(int URLId, string newURL)
+        public async Task ChangeURL(int URLId, string newURL)
         {
             URLModel? urlToChange = await _context.URLs.Include(u => u.actions).Include(u => u.xPaths).FirstOrDefaultAsync(u => u.url_id == URLId);
 
@@ -54,7 +55,7 @@ namespace DataAccessLayer.DataAccess.URLDbAccess
             }
         }
 
-        public async void DeleteURL(int URLId)
+        public async Task DeleteURL(int URLId)
         {
             URLModel? urlToDelete = await _context.URLs.Include(u => u.actions).Include(u => u.xPaths).FirstOrDefaultAsync(u => u.url_id == URLId);
 
@@ -70,7 +71,8 @@ namespace DataAccessLayer.DataAccess.URLDbAccess
             List<URLModel> returnList;
 
             returnList = await _context.URLs.Include(url => url.actions).Include(url=>url.xPaths).Include(url => url.shop).
-                Include(url => url.shop.xPaths).Include(url => url.shop.actions).ToListAsync();
+                Include(url => url.shop.xPaths).Include(url => url.shop.actions).
+                Include(url=>url.shop.actions).ThenInclude(a => a.action_data).ToListAsync();
             return returnList;
         }
     }

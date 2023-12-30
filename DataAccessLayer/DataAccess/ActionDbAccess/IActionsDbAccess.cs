@@ -11,10 +11,10 @@ namespace DataAccessLayer.DataAccess.ActionDbAccess
     {
         public Task<List<ActionModel>> GetURLActions(int URLId);
         public Task<List<ActionModel>> GetShopActions(int shopId);
-        public void AddURLAction(int URLId, ActionName actionName, List<string> actionData);
-        public void AddShopAction(int shopId, ActionName actionName, List<string> actionData);
-        public void DeleteURLAction(int URLId, int actionId);
-        public void DeleteShopAction(int shopId, int actionId);
+        public Task AddURLAction(int URLId, ActionName actionName, List<string> actionData);
+        public Task AddShopAction(int shopId, ActionName actionName, List<string> actionData);
+        public Task DeleteURLAction(int URLId, int actionId);
+        public Task DeleteShopAction(int shopId, int actionId);
 
     }
 }

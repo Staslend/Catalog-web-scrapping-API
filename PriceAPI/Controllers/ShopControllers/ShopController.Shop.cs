@@ -1,5 +1,7 @@
 ﻿using DataAccessLayer.DataAccess.ShopDbAccess;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json.Serialization;
+using System.Text.Json;
 
 namespace PriceAPI.Controllers.ShopControllers
 {
@@ -13,22 +15,26 @@ namespace PriceAPI.Controllers.ShopControllers
         }
 
         [HttpGet("shops")]
-        public JsonResult GetShops()
+        public async Task<JsonResult> GetShops()
         {
-            
-            return new JsonResult(_shopsDbAccess.GetShops());
+            JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions
+            {
+                ReferenceHandler = ReferenceHandler.IgnoreCycles,
+                WriteIndented = true
+            };
+            return new JsonResult(await _shopsDbAccess.GetShops(), jsonSerializerOptions);
         }
 
         [HttpPost("shops/add")]
-        public void AddShop(string shop_name, string shop_domain_name)
+        public async Task AddShop(string shop_name, string shop_domain_name)
         {
-            _shopsDbAccess.AddShop(shop_name, shop_domain_name);
+            await _shopsDbAccess.AddShop(shop_name, shop_domain_name);
         }
 
         [HttpDelete("shops/{shopId}")]
-        public void DeleteShop(int shopId)
+        public async Task DeleteShop(int shopId)
         {
-            _shopsDbAccess.DeleteShop(shopId);
+            await _shopsDbAccess.DeleteShop(shopId);
         }
 
     }

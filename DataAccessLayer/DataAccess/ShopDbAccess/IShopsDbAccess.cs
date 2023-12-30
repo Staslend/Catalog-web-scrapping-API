@@ -10,7 +10,7 @@ namespace DataAccessLayer.DataAccess.ShopDbAccess
     public interface IShopsDbAccess
     {
         public Task<List<ShopModel>> GetShops();
-        public void AddShop(string shopName, string shopDomainName);
-        public void DeleteShop(int shopId);
+        public Task AddShop(string shopName, string shopDomainName);
+        public Task DeleteShop(int shopId);
     }
 }

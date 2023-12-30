@@ -1,6 +1,8 @@
 ﻿using DataAccessLayer.DataAccess.ActionDbAccess;
 using DatabaseLayer.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json.Serialization;
+using System.Text.Json;
 
 namespace PriceAPI.Controllers.ShopControllers
 {
@@ -20,19 +22,25 @@ namespace PriceAPI.Controllers.ShopControllers
         public async Task<JsonResult> GetActions(int shopId)
         {
             List<ActionModel> actionsToReturn = await _actionsDbAccess.GetShopActions(shopId);
-            return new JsonResult(actionsToReturn);
+
+            JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions
+            {
+                ReferenceHandler = ReferenceHandler.IgnoreCycles,
+                WriteIndented = true
+            };
+            return new JsonResult(actionsToReturn, jsonSerializerOptions);
         }
 
         [HttpPost("shops/{shopId}/actions/add")]
-        public void AddActions(int shopId, ActionName action_name, [ModelBinder] List<string> action_data)
+        public async Task AddActions(int shopId, ActionName action_name, string action_data)
         {
-            _actionsDbAccess.AddShopAction(shopId, action_name, action_data);
+            await _actionsDbAccess.AddShopAction(shopId, action_name, action_data.Split(',').ToList());
         }
 
         [HttpDelete("shops/{shopId}/actions/delete")]
-        public void DeleteAction(int shopId, int actionId)
+        public async Task DeleteAction(int shopId, int actionId)
         {
-            _actionsDbAccess.DeleteShopAction(shopId, actionId);
+            await _actionsDbAccess.DeleteShopAction(shopId, actionId);
         }
 
     }

@@ -1,5 +1,7 @@
 ﻿using DataAccessLayer.DataAccess.XPathDbAccess;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json.Serialization;
+using System.Text.Json;
 
 namespace PriceAPI.Controllers.URLControllers
 {
@@ -16,24 +18,29 @@ namespace PriceAPI.Controllers.URLControllers
 
 
         [HttpGet("urls/{URLId}/xpaths")]
-        public JsonResult GetXPaths(int URLId)
+        public async Task<JsonResult> GetXPaths(int URLId)
         {
-            return new JsonResult(_xPathDbAccess.GetURLxPaths(URLId));
+            JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions
+            {
+                ReferenceHandler = ReferenceHandler.IgnoreCycles,
+                WriteIndented = true
+            };
+            return new JsonResult(await _xPathDbAccess.GetURLxPaths(URLId), jsonSerializerOptions);
         }
         [HttpPost("urls/{URLId}/xpaths")]
-        public void AddXPaths(int URLId , string xpath, string property, string atribute)
+        public async Task AddXPaths(int URLId , string xpath, string property, string atribute)
         {
-            _xPathDbAccess.AddURLxPath(URLId, xpath, property, atribute);
+            await _xPathDbAccess.AddURLxPath(URLId, xpath, property, atribute);
         }
         [HttpDelete("urls/{URLId}/xpaths")]
-        public void GetXPaths(int URLId, int xpathId)
+        public async Task GetXPaths(int URLId, int xpathId)
         {
-            _xPathDbAccess.DeleteURLxPath(URLId, xpathId);
+            await _xPathDbAccess.DeleteURLxPath(URLId, xpathId);
         }
         [HttpPatch("urls/{URLId}/xpaths")]
-        public void UpdateXPath(int URLId, int xpathId, string newXPath = "", string newProperty = "", string newAtribute = "")
+        public async Task UpdateXPath(int URLId, int xpathId, string newXPath = "", string newProperty = "", string newAtribute = "")
         {
-            _xPathDbAccess.UpdateURLxPath(URLId, xpathId, newXPath, newProperty, newAtribute);
+            await _xPathDbAccess.UpdateURLxPath(URLId, xpathId, newXPath, newProperty, newAtribute);
         }
     }
 }
